@@ -1,14 +1,16 @@
-from .item import Item, ItemException 
-from .player import Player, PlayerException
+from .inventory import ItemException, Inventory, ItemType
+from .player import Player, PlayerException, PlayerTurnManager
 from .shell import ShellInterface, LiveShell, BlankShell
 from .shotgun import Shotgun, ShotgunException
 
 
 __all__ = [
 
-    "Item",
+    "ItemType",
+    "Inventory",
     "ItemException",
     "Player",
+    "PlayerTurnManager",
     "PlayerException",
     "ShellInterface",
     "LiveShell",

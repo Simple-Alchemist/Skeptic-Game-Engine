@@ -4,6 +4,7 @@ from attrs import define, field,setters
 from attrs.validators import ge
 
 from .exception import PlayerException
+from ..inventory import Inventory
 
 @define(kw_only=True)
 class Player:
@@ -18,11 +19,13 @@ class Player:
         Current health value. Must be greater than or equal to 0.
     _cuffed : bool
         Indicates whether the player is currently restrained.
-
+    _inventory: Inventory 
+        Stores all Item 
     """
     _id: int = field(on_setattr=setters.frozen, validator=ge(0), alias="id")
     _health: int = field(alias="health")
     _cuffed: bool = field(default=False, init=False)
+    _inventory: Inventory = field(factory=Inventory)
 
     def __attrs_post_init__(self):
         """Making sure that the Health Value passed is not less or equal to zero"""
@@ -34,7 +37,6 @@ class Player:
 
             raise ValueError("Health cannot be negative")
     
-
     @property
     def id(self) -> int:
         """
@@ -49,6 +51,10 @@ class Player:
 
         return self._health 
     
+    @property
+    def inventory(self) -> Inventory:
+        return self._inventory
+     
     def is_alive(self) -> bool: 
         """Return Whether the Player is Alive or not"""
         return self._health > 0 
@@ -102,7 +108,5 @@ class Player:
             raise PlayerException("The Player is not Cuffed")
 
         self._cuffed = False
-
-
 
 

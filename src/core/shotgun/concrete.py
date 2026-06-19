@@ -17,6 +17,19 @@ class Shotgun:
     def magazine_order(self) -> tuple[ShellInterface, ...]: 
 
         return tuple(self._magazine[::-1])
+    
+    def is_magazine_empty(self) -> bool: 
+
+        return len(self.magazine_order) <= 0
+
+    def current_loaded_shell(self) -> ShellInterface:
+
+        if self.is_magazine_empty(): 
+            raise ShotgunException("Magazine is Empty")
+        
+        return self.magazine_order[0]
+        
+        
 
     def load_shells(self, shells: list[ShellInterface]) -> None:
         """
@@ -33,7 +46,7 @@ class Shotgun:
         Unloads a single shell from the magazine.
 
         """
-        if len(self._magazine) <=0: 
+        if self.is_magazine_empty(): 
             raise ShotgunException("Magazine is Empty")
         
         return self._magazine.pop()
