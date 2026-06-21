@@ -55,10 +55,12 @@ class Player:
     def inventory(self) -> Inventory:
         return self._inventory
      
+    @property
     def is_alive(self) -> bool: 
         """Return Whether the Player is Alive or not"""
         return self._health > 0 
 
+    @property
     def is_cuffed(self) -> bool: 
 
         """Return Whether the Player is Cuffed or not"""

@@ -1,7 +1,11 @@
+from typing import TYPE_CHECKING, override
+
+if TYPE_CHECKING: 
+    from ...session import Session
+
 from attrs import define, field
 
-from ...session import Session
-from ...data_classes import ActionResult, ActionType, ErrorType, ShootPayload
+from ...data_classes import Result, ActionType, ShootPayload
 from ..interface import TargetPlayerCommandInterface
 
 @define(kw_only=True)
@@ -10,14 +14,14 @@ class ShootCommand(TargetPlayerCommandInterface):
     _target_player_id: int = field(alias="target_player_id")
 
     @property
+    @override 
     def target_player_id(self) -> int: 
         return self._target_player_id
     
 
-    def execute(self, session: Session) -> ActionResult:
+    def execute(self, session: 'Session') -> Result:
         
         shotgun = session.shotgun 
-        
         ptm = session.player_turn_manager
         
         fired_shell = shotgun.unload_shell()
@@ -26,10 +30,10 @@ class ShootCommand(TargetPlayerCommandInterface):
 
         if targeted_player.health < fired_shell.damage:
             targeted_player.adjust_health(targeted_player.health)
+        else: 
+            targeted_player.adjust_health(-fired_shell.damage)
 
-        targeted_player.adjust_health(-fired_shell.damage)
-
-        return ActionResult(
+        return Result(
 
             action_type= ActionType.SHOOT,
             is_success=True,

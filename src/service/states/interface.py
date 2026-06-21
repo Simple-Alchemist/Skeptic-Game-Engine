@@ -1,11 +1,9 @@
-from __future__ import annotations
-
-
-from typing import Protocol, runtime_checkable 
+from typing import Protocol, runtime_checkable , TYPE_CHECKING
 
 from ..commands.interface import CommandInterface
-from ..session import Session
-from ..data_classes import ActionResult, States
+if TYPE_CHECKING:
+    from ..session import Session
+from ..data_classes import Result, States
 
 @runtime_checkable
 class StateInterface(Protocol): 
@@ -14,8 +12,10 @@ class StateInterface(Protocol):
     def name(self) -> States:
         ...
 
-    def handle(self, command: CommandInterface, session: Session) -> ActionResult: 
+    def handle(self, command: CommandInterface, session: 'Session') -> Result: 
         ...
+
+    def enter(self, session: 'Session'): ... # Only for Resolution State
 
 
 

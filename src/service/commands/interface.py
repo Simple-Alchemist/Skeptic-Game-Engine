@@ -1,8 +1,9 @@
 from typing import Protocol, runtime_checkable, TYPE_CHECKING
+from abc import ABC, abstractmethod
 
 if TYPE_CHECKING:
     from ..session import Session
-    from ..data_classes import ActionResult
+    from ..data_classes import Result
 
 from ...core import ItemType
 
@@ -10,35 +11,22 @@ from ...core import ItemType
 @runtime_checkable
 class CommandInterface(Protocol):
 
-    def execute(self, session: "Session") -> "ActionResult":
+    def execute(self, session: "Session") -> "Result":
         ...
 
+class InGameCommand(ABC):...
+class AboveGameCommand(ABC):...
 
-@runtime_checkable
-class InGameCommand(CommandInterface, Protocol):
-    ...
-
-
-@runtime_checkable
-class AboveGameCommand(CommandInterface, Protocol):
-    ...
-
-
-@runtime_checkable
-class ItemCommandInterface(InGameCommand, Protocol):
-
-    _item_type: ItemType
+class ItemCommandInterface(InGameCommand):
 
     @property
+    @abstractmethod
     def item_type(self) -> ItemType:
         ...
 
-
-@runtime_checkable
-class TargetPlayerCommandInterface(InGameCommand, Protocol):
-
-    _target_player_id: int
+class TargetPlayerCommandInterface(InGameCommand):
 
     @property
+    @abstractmethod
     def target_player_id(self) -> int:
         ...

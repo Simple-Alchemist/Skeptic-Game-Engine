@@ -13,7 +13,7 @@ class Inventory:
     _items_list: list[ItemType] = field(factory=list, init=False)
     
     @property
-    def items_list(self) -> tuple[ItemType,...]:
+    def items_tuple(self) -> tuple[ItemType,...]:
 
         return tuple(self._items_list)
     

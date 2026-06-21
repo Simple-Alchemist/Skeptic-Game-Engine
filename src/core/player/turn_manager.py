@@ -18,8 +18,7 @@ class PlayerTurnManager:
         init=False
     )
     _pointer: int = field(default=0, init=False, repr=False)
-
-
+    
     @property
     def current_player(self) -> Player:
     
@@ -49,8 +48,18 @@ class PlayerTurnManager:
     def all_player(self) -> list[Player]:
         return self._order
     
+    @property
     def is_player_sufficient(self) -> bool: 
-        return len(self._order) < 2
+        # Return True when there are enough players (>= 2)
+        return len(self._order) >= 2
+    
+    @property 
+    def direction(self) -> int: 
+        return self._direction 
+    
+    @property 
+    def pointer(self) -> int: 
+        return self._pointer
         
 
     def is_player_in_order(self, player_id: int) -> bool: 
@@ -83,10 +92,10 @@ class PlayerTurnManager:
 
     def advance(self, turns: int = 1) -> None:
 
-        if turns <= 0:
+        if turns < 0:
            raise PlayerException("Turns Can't be Less than equal 0")
 
-        self._pointer += turns*self._direction
+        self._pointer += (turns*self._direction)
 
     def reverse_order(self) -> None:
  

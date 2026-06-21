@@ -1,17 +1,21 @@
-from enum import Enum, auto
+from enum import IntEnum, auto
 
-class ActionType(Enum):
+class ActionType(IntEnum):
 
+    # In Game Action Types
     SHOOT = auto()
     USE_ITEM = auto()
-    RANDOM_CMD = auto()
-    TARGET_PLAYER = auto()
+
+    # Above Game Action Types
+    ADD_PLAYER = auto()
+    CMD_OBJ_PASSED = auto()
+    VERIFY_TARGET_PLAYER = auto()
     REMOVING_ITEM_FROM_INVENTORY = auto()
     ITEM_DISTRIBUTION = auto()
     LOAD_SHELL = auto()
     HAND_CUFF_PLAYER = auto()
-    START_ROUND = auto()
-    ADD_PLAYER = auto()
+    ATTEMPT_TO_PLAYSTATE = auto()
+    
 
 
     

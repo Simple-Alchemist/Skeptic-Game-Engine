@@ -1,6 +1,6 @@
-from enum import Enum, auto
+from enum import StrEnum, auto
 
-class States(Enum):
+class States(StrEnum):
     
     ROUND_MANAGER = auto()
     PLAY_STATE = auto()

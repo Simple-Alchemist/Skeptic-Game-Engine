@@ -31,7 +31,7 @@ class Shotgun:
         
         
 
-    def load_shells(self, shells: list[ShellInterface]) -> None:
+    def load_shells(self, shells: tuple[ShellInterface,...]) -> None:
         """
         Load a single shell object into the magazine.
 
@@ -39,7 +39,7 @@ class Shotgun:
             shell (ShellInterface): A shell object to add to the magazine.
         """
 
-        self._magazine.extend(shells)
+        self._magazine.extend(shells[::-1])
 
     def unload_shell(self) -> ShellInterface:  #Will be used for Shooting
         """

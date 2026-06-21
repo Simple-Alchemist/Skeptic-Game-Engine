@@ -1,19 +1,20 @@
-from enum import Enum, auto
+from enum import IntEnum, auto
 
-class ErrorType(Enum):
+class ErrorType(IntEnum):
 
-    INCORRECT_COMMAND = 2001
-    CURRENTLY_IN_RESOLUTION_STATE = auto()
-    GAME_OVER = auto()
-
-    UNKNOWN_PLAYER = 1001
+    #In Game Error 
+    UNKNOWN_PLAYER = auto()
     INSUFFICIENT_PLAYERS = auto()
     EMPTY_MAGAZINE = auto()
     ITEM_NOT_IN_INVENTORY = auto()
     HAND_CUFFING_YOURSELF = auto()
     CURRENT_PLAYER_CUFFED = auto()
     ALREADY_CUFFED = auto()
-    INVALID_SHELL_STATE = auto()
+    SHORT_HISTORY = auto()
 
-    
-    
+
+
+    #Above Game Error 
+    INCORRECT_COMMAND = 1001
+    CURRENTLY_IN_RESOLUTION_STATE = auto()
+    GAME_OVER = auto()

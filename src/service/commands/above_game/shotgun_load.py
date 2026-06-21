@@ -1,21 +1,25 @@
 from random import shuffle
+from typing import TYPE_CHECKING
 
-from attrs import define, field
 
-from ...session import Session
+from attrs import define
+
+if TYPE_CHECKING: 
+    from ...session import Session
+
 from ....core import LiveShell, BlankShell
-from ...data_classes import ActionResult, ActionType, ErrorType
+from ...data_classes import Result, ActionType, ErrorType
 from ..interface import AboveGameCommand
 
 
 @define(kw_only=True)
-class ShotgunLoad(AboveGameCommand):
+class ShotgunLoadCommand(AboveGameCommand):
 
     lives: int 
     blanks: int 
     random: bool = True
 
-    def execute(self, session: Session) -> ActionResult:
+    def execute(self, session: 'Session') -> Result:
 
         magazine_list: list = list()
 
@@ -28,10 +32,10 @@ class ShotgunLoad(AboveGameCommand):
         if self.random: 
             shuffle(magazine_list)
 
-        session.shotgun.load_shells(magazine_list)
+        session.shotgun.load_shells(tuple(magazine_list))
         
 
-        return ActionResult(
+        return Result(
 
             action_type= ActionType.LOAD_SHELL,
             is_success=True,

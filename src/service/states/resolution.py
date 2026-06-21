@@ -1,7 +1,11 @@
-from . import StateInterface, RoundManagerState, GameOverState, PlayState
-from ..commands import CommandInterface
-from ..session import Session
-from ..data_classes import ActionResult, ActionType, ErrorType, States
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..session import Session
+
+from . import StateInterface
+from ..commands.interface import CommandInterface
+from ..data_classes import Result, ActionType, ErrorType, States
 
 
 class ResolutionState(StateInterface):
@@ -10,47 +14,55 @@ class ResolutionState(StateInterface):
     def name(self) -> States:
         return States.RESOLUTION_STATE
 
-    def handle(self, command: CommandInterface, session: Session) -> ActionResult:
+    def handle(self, command: CommandInterface, session: 'Session') -> Result:
 
-        return ActionResult(
-            action_type=ActionType.RANDOM_CMD, 
+        return Result(
+            action_type=ActionType.CMD_OBJ_PASSED, 
             is_success=False, 
-            error_type=ErrorType.CURRENTLY_IN_RESOLUTION_STATE)    
+            error_type=ErrorType.CURRENTLY_IN_RESOLUTION_STATE
+            )    
     
-    def enter(self, session: Session) -> None:
+    def enter(self, session: 'Session') -> None:
 
         ptm = session.player_turn_manager
 
         #A bit of clean Up
-        for player in ptm.all_player:
-               if not player.is_alive(): 
+        # iterate over a copy since we may remove players from the turn order
+        for player in list(ptm.all_player):
+               if not player.is_alive: 
                    ptm.remove_player(player_id=player.id)
         
         #Checking whether the game is over or not
-        if len(ptm.all_player) < 2:
-            
-            session.change_state(new_state=GameOverState())
+        if not ptm.is_player_sufficient:
+    
+            session.change_state(new_state_enum=States.GAME_OVER, trigger_enter=False)
             return 
         
+        #Storing a Snapshot of the Game 
+        session.save_history()
+
         #Condition for Moving to RoundManagerState
         if session.shotgun.is_magazine_empty(): 
            
-           for player in session.player_turn_manager.all_player:
+           
+            for player in session.player_turn_manager.all_player:
                player.inventory.clear_inventory()
 
-           session.change_state(new_state=RoundManagerState())
-           return
+            session.change_state(new_state_enum=States.ROUND_MANAGER, trigger_enter=False)
+            return
 
 
         #Else -> Continue Transitioning to PlayState
 
         max_skips = len(ptm.all_player)  # Safety: avoid infinite loop
         skips = 0
-        while skips < max_skips and ptm.current_player.is_cuffed():
+        # call boolean methods properly
+        while skips < max_skips and ptm.current_player.is_cuffed:
             ptm.current_player.hand_uncuff()
             ptm.advance()
             skips += 1
 
-        session.change_state(new_state=PlayState())
+        
+        session.change_state(new_state_enum=States.PLAY_STATE, trigger_enter=False)
 
 

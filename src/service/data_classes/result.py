@@ -1,12 +1,12 @@
-from typing import Literal
+from attrs import define
 
-from attrs import define, field
+
 from .action_type import ActionType
 from .error_type import ErrorType
 from .payload.interface import PayLoadInterface
 
 @define(kw_only=True)
-class ActionResult:
+class Result:
 
     action_type: ActionType 
     is_success: bool 

@@ -1,23 +1,25 @@
-from random import randint
+from typing import TYPE_CHECKING
 
-from attrs import define
+from attrs import define,field
 
-from ...session import Session
-from ...data_classes import ActionResult, ActionType
+if TYPE_CHECKING: 
+    from ...session import Session
+
+from ...data_classes import Result, ActionType
 from ....core import Player
 from ..interface import AboveGameCommand
 
 @define(kw_only=True)
 class AddPlayerCommand(AboveGameCommand):
 
-    id: int 
-    health: int
+    _id: int = field(alias="id")
+    _health: int = field(alias="health")
 
-    def execute(self, session: Session) -> ActionResult:
+    def execute(self, session: 'Session') -> Result:
 
-        session.player_turn_manager.add_player(player_obj=Player(id=self.id, health=self.health))
+        session.player_turn_manager.add_player(player_obj=Player(id=self._id, health=self._health))
 
-        return ActionResult(
+        return Result(
 
             action_type= ActionType.ADD_PLAYER,
             is_success=True,

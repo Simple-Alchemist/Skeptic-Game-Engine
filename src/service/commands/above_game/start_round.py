@@ -1,22 +1,24 @@
-from random import shuffle
+from typing import TYPE_CHECKING
+
 
 from attrs import define, field
 
-from ...session import Session
-from ...states import ResolutionState
-from ...data_classes import ActionResult, ActionType
+if TYPE_CHECKING: 
+    from ...session import Session
+    
+from ...data_classes import Result, ActionType, States
 from ..interface import AboveGameCommand
 
 
 @define(kw_only=True)
-class StartRound(AboveGameCommand):
+class StartRoundCommand(AboveGameCommand):
 
-    def execute(self, session: Session) -> ActionResult:
+    def execute(self, session: 'Session') -> Result:
 
-        session.change_state(new_state=ResolutionState())
+        session.change_state(new_state_enum=States.RESOLUTION_STATE, trigger_enter=True)
 
-        return ActionResult(
+        return Result(
 
-            action_type= ActionType.START_ROUND,
+            action_type= ActionType.ATTEMPT_TO_PLAYSTATE,
             is_success=True,
             )
