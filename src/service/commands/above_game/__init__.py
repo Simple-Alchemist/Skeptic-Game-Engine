@@ -3,3 +3,5 @@ from .item_distribution import ItemDistributionCommand
 from .remove_player import RemovePlayerCommand
 from .shotgun_load import ShotgunLoadCommand
 from .start_round import StartRoundCommand
+from .add_item import AddItemCommand
+from .remove_item import RemoveItemCommand

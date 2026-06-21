@@ -4,6 +4,7 @@ if TYPE_CHECKING:
     from ..session import Session
 
 from . import StateInterface
+from ...core import LiveShell, BlankShell
 from ..commands.interface import CommandInterface
 from ..data_classes import Result, ActionType, ErrorType, States
 
@@ -41,7 +42,7 @@ class ResolutionState(StateInterface):
         #Storing a Snapshot of the Game 
         session.save_history()
 
-        #Condition for Moving to RoundManagerState
+        #Condition for Moving to RoundManagerState - 1
         if session.shotgun.is_magazine_empty(): 
            
            
@@ -50,7 +51,19 @@ class ResolutionState(StateInterface):
 
             session.change_state(new_state_enum=States.ROUND_MANAGER, trigger_enter=False)
             return
+        
+        has_live = any(s.damage >= 1 for s in session.shotgun.magazine_order)
+        has_blank = any(s.damage < 1 for s in session.shotgun.magazine_order)
+        if not (has_live and has_blank): 
+            #When there's no Combination of Live-Blank Shell, it will clear out the magazine
 
+            session.shotgun.clear_magazine()
+           
+            for player in session.player_turn_manager.all_player:
+               player.inventory.clear_inventory()
+
+            session.change_state(new_state_enum=States.ROUND_MANAGER, trigger_enter=False)
+            return
 
         #Else -> Continue Transitioning to PlayState
 

@@ -14,6 +14,7 @@ from .....core import  ItemType
 class BaistaDaustoItemCommand(ItemCommandInterface):
 
     _item_type: ItemType = field(init=False, default=ItemType.BAISTA_DAUSTO, repr=False)
+    _number_of_leap: int =field(default=3)
 
     @property
     @override
@@ -22,14 +23,14 @@ class BaistaDaustoItemCommand(ItemCommandInterface):
 
     def execute(self, session: 'Session') -> Result:
         
-        if not session.history_span >= 4:
+        if not session.history_span >= self._number_of_leap+1:
             return Result(
                     action_type=ActionType.USE_ITEM,
                     is_success=False,
                     error_type=ErrorType.SHORT_HISTORY
                 )        
 
-        session.leap_back(3)  
+        session.leap_back(self._number_of_leap)  
         
         return Result(
                 action_type=ActionType.USE_ITEM,

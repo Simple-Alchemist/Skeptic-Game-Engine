@@ -14,7 +14,7 @@ from ..interface import AboveGameCommand
 class ItemDistributionCommand(AboveGameCommand):
 
     _max_item: int = field(alias="max_item", default=4)
-    _except_player_ids: list[int]|None = field(alias="except_player_ids", default=None)
+    _except_player_ids: tuple[int,...] | None = field(alias="except_player_ids", default=None)
 
     def execute(self, session: 'Session') -> Result:
 
