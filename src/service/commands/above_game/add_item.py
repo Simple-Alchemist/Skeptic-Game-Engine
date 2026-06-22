@@ -28,8 +28,8 @@ class AddItemCommand(AboveGameCommand):
 
         target_player = session.player_turn_manager.get_player(player_id=self._player_id)
 
-        for item in self._items:
-            target_player.inventory.add_item(item)
+
+        target_player.inventory.add_items(self._items)
 
         return Result(
 

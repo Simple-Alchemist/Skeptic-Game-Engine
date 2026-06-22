@@ -21,15 +21,11 @@ class TwoFoldItemCommand(ItemCommandInterface):
          return self._item_type
     
     def execute(self, session: 'Session') -> Result:
-        
-        current_player = session.player_turn_manager.current_player
-  
+
         if session.shotgun.current_loaded_shell().damage >= 1: 
                 session.shotgun.unload_shell()
                 session.shotgun.load_shells((DoubleLiveShell(),))
-      
-        current_player.inventory.remove_item(item=self._item_type)
-
+    
         return Result(
 
             action_type=ActionType.USE_ITEM,

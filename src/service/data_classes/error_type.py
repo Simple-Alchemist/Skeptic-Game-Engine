@@ -11,6 +11,7 @@ class ErrorType(IntEnum):
     CURRENT_PLAYER_CUFFED = auto()
     ALREADY_CUFFED = auto()
     SHORT_HISTORY = auto()
+    EMPTY_WEIGHT_POOL = auto()
 
 
 

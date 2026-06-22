@@ -3,7 +3,7 @@ from .action_type import ActionType
 from .error_type import ErrorType
 from .states import States
 from .payload import ShootPayload, ShellPayload, InversePayload, HandCuffPayload, BananaPayload
-from .snapshot import GameSnapshot, PlayerSnapshot 
+from .snapshot import GameSnapshot, PlayerSnapshot, TurnSnapshot
 
 
 __all__ = [
@@ -12,8 +12,10 @@ __all__ = [
     "Result",
     "ActionType",
     "States",
+
     "GameSnapshot",
     "PlayerSnapshot",
+    "TurnSnapshot",
 
     "ShootPayload",
     "ShellPayload",

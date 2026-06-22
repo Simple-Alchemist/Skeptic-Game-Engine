@@ -25,7 +25,7 @@ class Player:
     _id: int = field(on_setattr=setters.frozen, validator=ge(0), alias="id")
     _health: int = field(alias="health")
     _cuffed: bool = field(default=False, init=False)
-    _inventory: Inventory = field(factory=Inventory)
+    _inventory: Inventory = field(factory=Inventory, init=False)
 
     def __attrs_post_init__(self):
         """Making sure that the Health Value passed is not less or equal to zero"""

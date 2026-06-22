@@ -22,13 +22,10 @@ class EjectorItemCommand(ItemCommandInterface):
 
     def execute(self, session: 'Session') -> Result:
         
-        current_player = session.player_turn_manager.current_player
+    
         shotgun = session.shotgun
-
         ejected_shell_damage = shotgun.unload_shell().damage
-            
-        current_player.inventory.remove_item(item=self._item_type)
-
+   
         return Result(
 
             action_type=ActionType.USE_ITEM,

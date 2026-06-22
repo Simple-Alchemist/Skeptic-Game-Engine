@@ -47,7 +47,7 @@ class ResolutionState(StateInterface):
            
            
             for player in session.player_turn_manager.all_player:
-               player.inventory.clear_inventory()
+               player.inventory.clear()
 
             session.change_state(new_state_enum=States.ROUND_MANAGER, trigger_enter=False)
             return
@@ -60,7 +60,7 @@ class ResolutionState(StateInterface):
             session.shotgun.clear_magazine()
            
             for player in session.player_turn_manager.all_player:
-               player.inventory.clear_inventory()
+               player.inventory.clear()
 
             session.change_state(new_state_enum=States.ROUND_MANAGER, trigger_enter=False)
             return

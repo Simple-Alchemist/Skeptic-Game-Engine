@@ -21,9 +21,9 @@ class Inventory:
         
         return item in self._items_list
     
-    def add_item(self, item: ItemType) -> None: 
+    def add_items(self, item_tuple: tuple[ItemType,...]) -> None: 
 
-        self._items_list.append(item)
+        self._items_list.extend(item_tuple)
 
     def remove_item(self, item: ItemType) -> None: 
 
@@ -34,7 +34,7 @@ class Inventory:
 
             raise ItemException(f"Item of '{item}' isn't present in the inventory")
 
-    def clear_inventory(self) -> None: 
+    def clear(self) -> None: 
 
         self._items_list.clear()
         

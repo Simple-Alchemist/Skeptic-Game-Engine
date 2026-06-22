@@ -27,7 +27,7 @@ class RemoveItemCommand(AboveGameCommand):
 
         target_player = session.player_turn_manager.get_player(player_id=self._player_id)
 
-        if not set(self._items).issubset(set(target_player.inventory.items_tuple)):
+        if not set(self._items).issubset(target_player.inventory.items_tuple):
 
             return Result(
 

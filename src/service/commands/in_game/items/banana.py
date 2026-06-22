@@ -23,11 +23,11 @@ class BananaItemCommand(ItemCommandInterface):
     def execute(self, session: 'Session') -> Result:
         
         current_player = session.player_turn_manager.current_player
+        
         initial_health = current_player.health
         current_player.adjust_health(points=+1)
         final_health = current_player.health
         
-        current_player.inventory.remove_item(item=self._item_type)
 
         return Result(
                 action_type=ActionType.USE_ITEM,

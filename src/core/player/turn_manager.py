@@ -40,13 +40,12 @@ class PlayerTurnManager:
             raise PlayerException("Couldn't retrieve the next player.")
 
     @property
-    def turn_order(self) -> tuple[Player, ...]:
-
+    def all_player(self) -> tuple[Player,...]:
         return tuple(self._order)
     
     @property
-    def all_player(self) -> list[Player]:
-        return self._order
+    def total_player(self) -> int: 
+        return len(self._order)
     
     @property
     def is_player_sufficient(self) -> bool: 
@@ -100,4 +99,10 @@ class PlayerTurnManager:
     def reverse_order(self) -> None:
  
         self._direction = self._direction * -1
+        self._pointer = 0
+
+    def clear_reset_order(self) -> None: 
+
+        self._order.clear()
+        self._direction = 1
         self._pointer = 0

@@ -20,18 +20,15 @@ class InverseShellItemCommand(ItemCommandInterface):
         return self._item_type
     
     def execute(self, session: 'Session') -> Result:
-        
-        current_player = session.player_turn_manager.current_player
 
         shotgun = session.shotgun
-
+        
         previous_shell = shotgun.unload_shell()
 
         new_shell = BlankShell() if previous_shell.damage >= 1 else LiveShell() 
 
         shotgun.load_shells((new_shell,))
 
-        current_player.inventory.remove_item(item=self._item_type)
 
         return Result(
 

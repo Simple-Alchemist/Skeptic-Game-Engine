@@ -50,8 +50,6 @@ class HandCuffItemCommand(ItemCommandInterface, TargetPlayerCommandInterface):
             
         targeted_player.hand_cuff() 
 
-        current_player.inventory.remove_item(item=self._item_type)
-
         return Result(
 
             action_type=ActionType.USE_ITEM,

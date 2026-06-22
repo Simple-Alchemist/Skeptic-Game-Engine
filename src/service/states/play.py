@@ -36,6 +36,7 @@ class PlayState(StateInterface):
                     )   
     
         if isinstance(command, ItemCommandInterface):
+
             if not current_player.inventory.is_item_present(item=command.item_type): 
 
                 return Result( 
@@ -49,7 +50,12 @@ class PlayState(StateInterface):
 
         if result.is_success:
 
-            session.change_state(new_state_enum=States.RESOLUTION_STATE, trigger_enter=True)
+            if isinstance(command, ItemCommandInterface):
+                
+                current_player.inventory.remove_item(item=command.item_type)
+
+            else:
+                session.change_state(new_state_enum=States.RESOLUTION_STATE, trigger_enter=True)
 
         return result
 
