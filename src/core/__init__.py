@@ -9,12 +9,15 @@ __all__ = [
     "ItemType",
     "Inventory",
     "ItemException",
+
     "Player",
     "PlayerTurnManager",
     "PlayerException",
+
     "ShellInterface",
     "LiveShell",
     "BlankShell",
+    
     "Shotgun",
     "ShotgunException"
 ]

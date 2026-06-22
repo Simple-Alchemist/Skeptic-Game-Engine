@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     
 from attrs import define, field
 
-from ....data_classes import Result, ActionType, PlayerSnapshot
+from ....data_classes import Result, ActionType, PlayerSnapshot, CharemPayload
 from ...interface import ItemCommandInterface
 
 from .....core import  ItemType
@@ -64,6 +64,6 @@ class CharemItemCommand(ItemCommandInterface):
 
         return Result(
             action_type=ActionType.USE_ITEM, 
-            is_success=True
-            #using payload
+            is_success=True,
+            payload=CharemPayload()
         )

@@ -15,8 +15,8 @@ class PlayerSnapshot:
 @define(kw_only=True,frozen=True)
 class TurnSnapshot:
     current_player_id: int 
-    turn_order_direction: int
-    turn_pointer: int
+    direction: int
+    pointer: int
 
 @define(kw_only=True, frozen=True)
 class GameSnapshot:

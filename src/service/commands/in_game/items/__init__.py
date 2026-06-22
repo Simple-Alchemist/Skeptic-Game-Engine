@@ -7,8 +7,9 @@ from .ejector import EjectorItemCommand
 from .hand_cuff import HandCuffItemCommand
 from .inverse_shell import InverseShellItemCommand
 from .peek import PeekItemCommand
-from .twofold import TwoFoldItemCommand
-from .twofold import DoubleLiveShell
+from .twofold import TwoFoldItemCommand, DoubleLiveShell
+from .u_turn import UTurnItemCommand
+from .charem import CharemItemCommand
 
 __all__ = [
     "BananaItemCommand",
@@ -18,4 +19,6 @@ __all__ = [
     "InverseShellItemCommand",
     "PeekItemCommand",
     "TwoFoldItemCommand",
+    "UTurnItemCommand",
+    "CharemItemCommand"
 ]

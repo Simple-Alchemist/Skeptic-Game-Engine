@@ -37,7 +37,12 @@ class ShootCommand(TargetPlayerCommandInterface):
 
             action_type= ActionType.SHOOT,
             is_success=True,
-            payload=ShootPayload(damage_dealt=fired_shell.damage)
+            payload=ShootPayload(
+                damage_dealt=fired_shell.damage, 
+                advance_turn= not (
+                    fired_shell.damage <= 0 and self._target_player_id == ptm.current_player.id
+                    )
+                )
 
             )
 

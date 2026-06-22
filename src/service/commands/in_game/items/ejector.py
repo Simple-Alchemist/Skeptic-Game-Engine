@@ -22,7 +22,6 @@ class EjectorItemCommand(ItemCommandInterface):
 
     def execute(self, session: 'Session') -> Result:
         
-    
         shotgun = session.shotgun
         ejected_shell_damage = shotgun.unload_shell().damage
    

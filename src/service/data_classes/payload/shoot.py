@@ -1,6 +1,7 @@
-from .interface import PayLoadInterface
+from .base import BasePayload
 from attrs import define
 
 @define(kw_only=True)
-class ShootPayload(PayLoadInterface):
-    damage_dealt: int  
+class ShootPayload(BasePayload):
+    damage_dealt: int
+    advance_turn: bool

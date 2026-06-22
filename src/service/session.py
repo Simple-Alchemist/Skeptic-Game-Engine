@@ -13,7 +13,7 @@ class Session:
     _state: StateInterface = field(init=False, factory=RoundManagerState) 
     _finite_machine: dict[States, type[StateInterface]] = field(factory=dict, init=False)  
 
-    _history: list[GameSnapshot] = field(factory=list,init=False) #Under work
+    _history: list[GameSnapshot] = field(factory=list,init=False)
 
     def __attrs_post_init__(self):
 
@@ -48,6 +48,7 @@ class Session:
 
     def export_game_snapshot(self) -> GameSnapshot: 
         
+        # Creating tuple of PlaySnapshot
         player_datas = tuple(
             PlayerSnapshot(
                 id=p.id,
@@ -61,8 +62,8 @@ class Session:
             current_state_name=self.current_state_name,
             turn_data=TurnSnapshot(
                 current_player_id=self.player_turn_manager.current_player.id,
-                turn_order_direction=self.player_turn_manager.direction,
-                turn_pointer=self.player_turn_manager.pointer
+                direction=self.player_turn_manager.direction,
+                pointer=self.player_turn_manager.pointer
             ),
             player_datas=player_datas,
             magazine=self.shotgun.magazine_order
@@ -72,6 +73,8 @@ class Session:
         
         ptm = self.player_turn_manager
         shotgun = self.shotgun
+
+        #clearing out the current config of order
         ptm.clear_reset_order()
 
         for player_data in snapshot.player_datas: 
@@ -95,11 +98,11 @@ class Session:
 
         new_state_enum: States = snapshot.current_state_name
         
-        if snapshot.turn_data.turn_order_direction <= -1:
+        if snapshot.turn_data.direction <= -1:
             ptm.reverse_order()
 
         #Estimating Pointer of the player
-        ptm.advance(turns=abs(snapshot.turn_data.turn_pointer))
+        ptm.advance(turns=abs(snapshot.turn_data.pointer))
 
         if ptm.current_player.id != snapshot.turn_data.current_player_id:
             raise PlayerException("Import Error: Current Player didn't matched")
@@ -148,27 +151,35 @@ class Session:
 
         for player_data in player_snaps: 
 
-            if ptm.is_player_in_order(player_id=player_data.id):
-                target_player = ptm.get_player(player_id=player_data.id) 
+            target_player: Player | None = None
 
-                target_player.adjust_health(player_data.health-target_player.health)
+            if not ptm.is_player_in_order(player_id=player_data.id):
 
-                if player_data.is_cuffed and not target_player.is_cuffed: 
-                    target_player.hand_cuff() 
-                elif not player_data.is_cuffed and target_player.is_cuffed: 
-                    target_player.hand_uncuff()
+                ptm.add_player(player_obj=Player(id=player_data.id, health=player_data.health))
 
-                target_player.inventory.clear()
-                target_player.inventory.add_items(player_data.inventory)
+            target_player = ptm.get_player(player_id=player_data.id) 
+    
+            target_player.adjust_health(player_data.health-target_player.health)
+
+            if player_data.is_cuffed and not target_player.is_cuffed: 
+                target_player.hand_cuff() 
+            elif not player_data.is_cuffed and target_player.is_cuffed: 
+                target_player.hand_uncuff()
+
+            target_player.inventory.clear()
+            target_player.inventory.add_items(player_data.inventory)
 
 
     def save_history(self):
 
         self._history.append(self.export_game_snapshot())
 
+    def save_player_activity(self):
+        ... #also create a get method
+
     def leap_back(self, leap: int = 3):
 
-        if len(self._history) <= leap:
+        if self.history_span <= leap:
             raise Exception("Can't Leap in Mystery") 
         
         self.import_game_snapshot(self._history[-leap])

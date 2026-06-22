@@ -22,9 +22,8 @@ class RoundManagerState(StateInterface):
             return Result( 
                 action_type=ActionType.CMD_OBJ_PASSED,
                 is_success=False, 
-                error_type=ErrorType.INCORRECT_COMMAND
+                error_type=ErrorType.INCORRECT_COMMAND_FOR_THE_STATE
             )
-   
         
         result = command.execute(session=session)
         

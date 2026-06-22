@@ -3,7 +3,6 @@ from ....core import ItemType
 from attrs import define
 
 @define(kw_only=True)
-class ShellPayload(ItemBasePayload):
-    
-    item_type: ItemType
-    shell_damage: int
+class CharemPayload(ItemBasePayload):
+
+    item_type: ItemType = ItemType.CHAREM

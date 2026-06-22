@@ -2,7 +2,6 @@ from enum import IntEnum, auto
 
 class ErrorType(IntEnum):
 
-    #In Game Error 
     UNKNOWN_PLAYER = auto()
     INSUFFICIENT_PLAYERS = auto()
     EMPTY_MAGAZINE = auto()
@@ -14,8 +13,6 @@ class ErrorType(IntEnum):
     EMPTY_WEIGHT_POOL = auto()
 
 
-
-    #Above Game Error 
-    INCORRECT_COMMAND = 1001
+    INCORRECT_COMMAND_FOR_THE_STATE = auto()
     CURRENTLY_IN_RESOLUTION_STATE = auto()
     GAME_OVER = auto()

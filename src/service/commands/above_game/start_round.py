@@ -19,6 +19,6 @@ class StartRoundCommand(AboveGameCommand):
 
         return Result(
 
-            action_type= ActionType.ATTEMPT_TO_PLAYSTATE,
+            action_type= ActionType.ATTEMPT_TO_TRANSITION_TO_PLAYSTATE,
             is_success=True,
             )

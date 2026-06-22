@@ -5,7 +5,7 @@ if TYPE_CHECKING:
     
 from attrs import define, field
 
-from ....data_classes import Result, ActionType, ErrorType
+from ....data_classes import Result, ActionType, ErrorType, BaistaDaustoPayload
 from ...interface import ItemCommandInterface
 
 from .....core import  ItemType
@@ -35,5 +35,5 @@ class BaistaDaustoItemCommand(ItemCommandInterface):
         return Result(
                 action_type=ActionType.USE_ITEM,
                 is_success=True,
-                #Will be working on the payload 
+                payload=BaistaDaustoPayload(total_leap_back=self._number_of_leap)
             )

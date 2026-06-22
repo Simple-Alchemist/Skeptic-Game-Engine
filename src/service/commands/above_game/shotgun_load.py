@@ -17,7 +17,6 @@ class ShotgunLoadCommand(AboveGameCommand):
 
     lives: int 
     blanks: int 
-    random: bool = True
 
     def execute(self, session: 'Session') -> Result:
 
@@ -29,8 +28,8 @@ class ShotgunLoadCommand(AboveGameCommand):
         for _ in range(0, self.blanks):
             magazine_list.append(BlankShell())
 
-        if self.random: 
-            shuffle(magazine_list)
+       
+        shuffle(magazine_list)
 
         session.shotgun.load_shells(tuple(magazine_list))
         

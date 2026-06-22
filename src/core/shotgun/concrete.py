@@ -28,8 +28,6 @@ class Shotgun:
             raise ShotgunException("Magazine is Empty")
         
         return self.magazine_order[0]
-        
-        
 
     def load_shells(self, shells: tuple[ShellInterface,...]) -> None:
         """

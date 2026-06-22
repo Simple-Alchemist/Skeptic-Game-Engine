@@ -2,11 +2,10 @@ from enum import IntEnum, auto
 
 class ActionType(IntEnum):
 
-    # In Game Action Types
+  
     SHOOT = auto()
     USE_ITEM = auto()
 
-    # Above Game Action Types
     ADD_PLAYER = auto()
     REMOVE_PLAYER = auto()
     CMD_OBJ_PASSED = auto()
@@ -15,7 +14,12 @@ class ActionType(IntEnum):
     ITEM_DISTRIBUTION = auto()
     LOAD_SHELL = auto()
     HAND_CUFF_PLAYER = auto()
-    ATTEMPT_TO_PLAYSTATE = auto()
+    ATTEMPT_TO_TRANSITION_TO_PLAYSTATE = auto()
+
+    EXPORT_GAME = auto() 
+    EXPORT_PLAYERS = auto()
+    IMPORT_GAME = auto() 
+    IMPORT_PLAYERS = auto()
     
     ADD_ITEM = auto()
     REMOVE_ITEM = auto()

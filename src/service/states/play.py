@@ -5,7 +5,7 @@ if TYPE_CHECKING:
 
 from . import StateInterface
 from ..commands.interface import CommandInterface, ItemCommandInterface, TargetPlayerCommandInterface, InGameCommand
-from ..data_classes import Result, ActionType, ErrorType, States
+from ..data_classes import Result, ActionType, ErrorType, States, ShootPayload
 
 
 class PlayState(StateInterface):
@@ -23,7 +23,7 @@ class PlayState(StateInterface):
                 return Result(
                         action_type=ActionType.CMD_OBJ_PASSED,
                         is_success=False,
-                        error_type=ErrorType.INCORRECT_COMMAND
+                        error_type=ErrorType.INCORRECT_COMMAND_FOR_THE_STATE
                     )  
 
         if isinstance(command, TargetPlayerCommandInterface):
@@ -54,8 +54,10 @@ class PlayState(StateInterface):
                 
                 current_player.inventory.remove_item(item=command.item_type)
 
-            else:
-                session.change_state(new_state_enum=States.RESOLUTION_STATE, trigger_enter=True)
+            if isinstance(result.payload, ShootPayload):
+                   
+                if result.payload.advance_turn:
+                    session.change_state(new_state_enum=States.RESOLUTION_STATE, trigger_enter=True)
 
         return result
 

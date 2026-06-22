@@ -1,4 +1,5 @@
 from random import randint
+from statistics import stdev,mean
 from typing import TYPE_CHECKING
 
 from attrs import define, field
@@ -26,7 +27,11 @@ class ItemDistributionCommand(AboveGameCommand):
             items_available = tuple(
                 item for item in items_available if item not in self._except_items_type
             )
+        
+        all_item_value: tuple[int,...] = tuple( item.value for item in items_available )
 
+        rarity_threshold = mean(data=all_item_value)- stdev(data=all_item_value)
+        
         for item in items_available:
             for _ in range(item.value):
                 weight_pool.append(item)
@@ -49,6 +54,9 @@ class ItemDistributionCommand(AboveGameCommand):
                 _random_pointer = randint(0, len(weight_pool)-1)
 
                 item_selected:ItemType = weight_pool[_random_pointer]
+
+                if (item_selected.value < rarity_threshold) and (item_selected in player.inventory.items_tuple):
+                    continue 
 
                 player.inventory.add_items((item_selected,))
                 allocate_counter +=1
