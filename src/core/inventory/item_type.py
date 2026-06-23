@@ -4,16 +4,15 @@ from enum import IntEnum
 
 class ItemType(IntEnum): 
 
-    HAND_CUFF = 5
-    TWO_FOLD = 5
-    PEEK_SHOTGUN = 7
+    HAND_CUFF = 2
+    TWO_FOLD = 3
+    PEEK_SHOTGUN = 3
     INVERSE_SHELL = 3
-    EJECTOR = 7
-    BANANA = 6 #Gives Health 
+    EJECTOR = 3
+    BANANA = 3 #Gives Health 
     BAISTA_DAUSTO = 1 #Killer QUEEN!!!!!!!!
-    KRIMSON = 1
-    U_TURN = 3
-    CHAREM = 2
+    U_TURN = 2
+    CHAREM = 1
 
     @classmethod
     def item_available(cls: type[Self]) -> tuple[Self,...] :

@@ -6,20 +6,27 @@ if TYPE_CHECKING:
 from attrs import define, field
 
 from ....data_classes import Result, ActionType, ErrorType, BaistaDaustoPayload
-from ...interface import ItemCommandInterface
+from ...interface import ItemCommandInterface, TargetPlayerCommandInterface
 
 from .....core import  ItemType
 
 @define(kw_only=True)
-class BaistaDaustoItemCommand(ItemCommandInterface):
+class BaistaDaustoItemCommand(ItemCommandInterface, TargetPlayerCommandInterface):
 
     _item_type: ItemType = field(init=False, default=ItemType.BAISTA_DAUSTO, repr=False)
+    _target_player_id: int = field(alias="target_player_id")
     _number_of_leap: int =field(default=3)
 
     @property
     @override
     def item_type(self) -> ItemType:
         return self._item_type
+    
+    @property
+    @override
+    def target_player_id(self) -> int:
+        
+        return self._target_player_id
 
     def execute(self, session: 'Session') -> Result:
         
@@ -30,7 +37,17 @@ class BaistaDaustoItemCommand(ItemCommandInterface):
                     error_type=ErrorType.SHORT_HISTORY
                 )        
 
+        target_player_data = session.export_players_snapshot(player_ids=(self._target_player_id,))
         session.leap_back(self._number_of_leap)  
+        session.import_players_snapshot(player_snaps=target_player_data)
+
+        all_player = session.player_turn_manager.all_player
+
+        for i in range(0, session.player_turn_manager.total_player):
+            if not self._target_player_id == all_player[i].id: 
+                session.player_turn_manager.advance()
+            else: 
+                break
         
         return Result(
                 action_type=ActionType.USE_ITEM,

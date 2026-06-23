@@ -18,13 +18,18 @@ class Shotgun:
 
         return tuple(self._magazine[::-1])
     
+    @property
+    def mag_size(self) -> int: 
+        return len(self._magazine)
+
+    @property
     def is_magazine_empty(self) -> bool: 
 
-        return len(self.magazine_order) <= 0
+        return self.mag_size <= 0
 
     def current_loaded_shell(self) -> ShellInterface:
 
-        if self.is_magazine_empty(): 
+        if self.is_magazine_empty: 
             raise ShotgunException("Magazine is Empty")
         
         return self.magazine_order[0]
@@ -44,10 +49,32 @@ class Shotgun:
         Unloads a single shell from the magazine.
 
         """
-        if self.is_magazine_empty(): 
+        if self.is_magazine_empty: 
             raise ShotgunException("Magazine is Empty")
         
         return self._magazine.pop()
+    
+    def get_shell(self, position: int) -> ShellInterface: 
+
+        if self.is_magazine_empty: 
+            raise ShotgunException("Magazine is Empty") 
+        
+        if position >= self.mag_size: 
+            raise ShotgunException(f"position: {position} doesn't exist")
+        
+        return self._magazine[-(position + 1)] 
+        
+    
+    def replace_shell(self, position: int, shell: ShellInterface) -> None: 
+
+        if self.is_magazine_empty: 
+            raise ShotgunException("Magazine is Empty") 
+        
+        if position >= self.mag_size: 
+            raise ShotgunException(f"position: {position} doesn't exist")
+        
+        self._magazine[-(position + 1)] = shell
+        
 
     def clear_magazine(self):
         """

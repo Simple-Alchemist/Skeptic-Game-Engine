@@ -161,9 +161,10 @@ class Session:
     
             target_player.adjust_health(player_data.health-target_player.health)
 
-            if player_data.is_cuffed and not target_player.is_cuffed: 
+            if (player_data.is_cuffed) and (not target_player.is_cuffed): 
                 target_player.hand_cuff() 
-            elif not player_data.is_cuffed and target_player.is_cuffed: 
+
+            elif (not player_data.is_cuffed) and (target_player.is_cuffed): 
                 target_player.hand_uncuff()
 
             target_player.inventory.clear()

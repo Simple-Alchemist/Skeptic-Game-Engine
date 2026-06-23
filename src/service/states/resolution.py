@@ -39,11 +39,26 @@ class ResolutionState(StateInterface):
             session.change_state(new_state_enum=States.GAME_OVER, trigger_enter=False)
             return 
         
-        #Storing a Snapshot of the Game 
-        session.save_history()
+        
+        max_skips = len(ptm.all_player)  # Safety: avoid infinite loop
+        skips = 0
+        # call boolean methods properly
+        while skips < max_skips:
+
+            ptm.advance() 
+
+            # Scenario A: The NEXT person is cuffed. 
+            if ptm.current_player.is_cuffed:
+                ptm.current_player.hand_uncuff()
+
+                skips += 1
+            
+                continue
+            
+            break 
 
         #Condition for Moving to RoundManagerState - 1
-        if session.shotgun.is_magazine_empty(): 
+        if session.shotgun.is_magazine_empty: 
            
            
             for player in session.player_turn_manager.all_player:
@@ -65,16 +80,10 @@ class ResolutionState(StateInterface):
             session.change_state(new_state_enum=States.ROUND_MANAGER, trigger_enter=False)
             return
 
+        #Storing a Snapshot of the Game 
+        session.save_history()
+
         #Else -> Continue Transitioning to PlayState
-
-        max_skips = len(ptm.all_player)  # Safety: avoid infinite loop
-        skips = 0
-        # call boolean methods properly
-        while skips < max_skips and ptm.current_player.is_cuffed:
-            ptm.current_player.hand_uncuff()
-            ptm.advance()
-            skips += 1
-
         
         session.change_state(new_state_enum=States.PLAY_STATE, trigger_enter=False)
 
