@@ -45,11 +45,10 @@ class ResolutionState(StateInterface):
         # call boolean methods properly
         while skips < max_skips:
 
-            ptm.advance() 
-
             # Scenario A: The NEXT person is cuffed. 
             if ptm.current_player.is_cuffed:
                 ptm.current_player.hand_uncuff()
+                ptm.advance() 
 
                 skips += 1
             
@@ -57,15 +56,6 @@ class ResolutionState(StateInterface):
             
             break 
 
-        #Condition for Moving to RoundManagerState - 1
-        if session.shotgun.is_magazine_empty: 
-           
-           
-            for player in session.player_turn_manager.all_player:
-               player.inventory.clear()
-
-            session.change_state(new_state_enum=States.ROUND_MANAGER, trigger_enter=False)
-            return
         
         has_live = any(s.damage >= 1 for s in session.shotgun.magazine_order)
         has_blank = any(s.damage < 1 for s in session.shotgun.magazine_order)

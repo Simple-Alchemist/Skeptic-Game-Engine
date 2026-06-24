@@ -1,37 +1,47 @@
 """Mildly Testing out the classes and methods"""
-# from src import Session
-# from src import (
-#     ItemDistributionCommand, 
-#     AddPlayerCommand, 
-#     StartRoundCommand,
-#     ShotgunLoadCommand,
-#     ShootCommand,
-#     TwoFoldItemCommand,
-    
-# )
+from src import Session
+from src import (
+    ItemDistributionCommand, 
+    AddPlayerCommand, 
+    StartRoundCommand,
+    ShotgunLoadCommand,
+    ShootCommand,
+    TwoFoldItemCommand,
+)
 
-# session = Session()
+from src.bot import BotAbility
+session = Session()
 
-# result = session.game_command(AddPlayerCommand(id=101, health=10))
-# result = session.game_command(AddPlayerCommand(id=102, health=10))
+result = session.game_command(AddPlayerCommand(id=101, health=10))
+result = session.game_command(AddPlayerCommand(id=102, health=10))
 
-# result = session.game_command(ShotgunLoadCommand(lives=5, blanks=5))
+result = session.game_command(ShotgunLoadCommand(lives=5, blanks=5))
 
-# result = session.game_command(ItemDistributionCommand(max_item=4))
+result = session.game_command(ItemDistributionCommand(max_item=5))
 
-# if not result.is_success:
-#     print("something went wrong")
+print(result,end="\n")
 
-# # print(session.player_turn_manager.all_player)
-# result = session.game_command(StartRoundCommand())
 
-# result = session.game_command(command=TwoFoldItemCommand())
-# result = session.game_command(command=ShootCommand(target_player_id=102))
+# print(session.player_turn_manager.all_player)
+result = session.game_command(StartRoundCommand())
 
-# test = session.export_snapshot()
+print(session.player_turn_manager.current_player.inventory, end="\n")
+bot_snap = session.export_game_snapshot()
 
-# result = session.game_command(command=ShootCommand(target_player_id=102))
 
-# # print(result)
+ability = BotAbility(gs=bot_snap,last_result=result)
+print(bot_snap)
+print()
+response = ability.think()
 
-# session.import_snapshot(test)
+print(response)
+result = session.game_command(command=response)
+print()
+print(result)
+
+print() 
+
+print(session.export_game_snapshot())
+
+
+

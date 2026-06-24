@@ -6,6 +6,7 @@ if TYPE_CHECKING:
     from ....session import Session
 
 from ....data_classes import Result, ActionType
+from ....data_classes.payload.u_turn import UTurnPayload
 from ...interface import ItemCommandInterface
 from .....core import ItemType
 
@@ -28,6 +29,5 @@ class UTurnItemCommand(ItemCommandInterface):
 
             action_type=ActionType.USE_ITEM,
             is_success=True,
-            # payload=
-            # in the payload, show the previous shell 
+            payload=UTurnPayload()
         )

@@ -14,7 +14,7 @@ from .....core import  ItemType
 @define(kw_only=True)
 class CharemItemCommand(ItemCommandInterface):
 
-    _item_type: ItemType = field(init=False, default=ItemType.BANANA, repr=False)
+    _item_type: ItemType = field(init=False, default=ItemType.CHAREM, repr=False)
 
     @property
     @override
@@ -33,6 +33,7 @@ class CharemItemCommand(ItemCommandInterface):
         random_pointer = randint(0,len(valid_targets)-1)
 
         random_player = valid_targets[random_pointer] 
+
 
         players_snaps = session.export_players_snapshot(
             player_ids=(random_player.id, ptm.current_player.id)
@@ -61,6 +62,9 @@ class CharemItemCommand(ItemCommandInterface):
         )
         
         session.import_players_snapshot(player_snaps=new_player_snaps)
+
+        random_player.inventory.remove_item(item=ItemType.CHAREM)
+        ptm.current_player.inventory.add_items(item_tuple=(ItemType.CHAREM,))
 
         return Result(
             action_type=ActionType.USE_ITEM, 

@@ -1,13 +1,14 @@
 from .shoot import ShootCommand
 from .items import (
-    InverseShellItemCommand, 
+    RandomInverseShellItemCommand, 
     PeekItemCommand, 
     HandCuffItemCommand, 
     BananaItemCommand, 
     EjectorItemCommand, 
     TwoFoldItemCommand,
     UTurnItemCommand,
-    CharemItemCommand
+    CharemItemCommand,
+    BaistaDaustoItemCommand
 )
 
 
@@ -16,10 +17,11 @@ __all__ = [
     "BananaItemCommand",
     "EjectorItemCommand",
     "HandCuffItemCommand",
-    "InverseShellItemCommand",
+    "RandomInverseShellItemCommand",
     "PeekItemCommand",
     "TwoFoldItemCommand",
     "UTurnItemCommand",
     "CharemItemCommand", 
+    "BaistaDaustoItemCommand"
 
 ]

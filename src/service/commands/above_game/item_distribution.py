@@ -27,21 +27,25 @@ class ItemDistributionCommand(AboveGameCommand):
             items_available = tuple(
                 item for item in items_available if item not in self._except_items_type
             )
-        
-        all_item_value: tuple[int,...] = tuple( item.value for item in items_available )
 
-        rarity_threshold = mean(data=all_item_value)- stdev(data=all_item_value)
-        
-        for item in items_available:
-            for _ in range(item.value):
-                weight_pool.append(item)
-                
-        if not weight_pool:
+        if not items_available:
             return Result(
                 action_type=ActionType.ITEM_DISTRIBUTION,
                 is_success=False,
                 error_type=ErrorType.EMPTY_WEIGHT_POOL
             )
+        
+        all_item_value: tuple[int,...] = tuple( item.weight for item in items_available )
+
+        
+
+        rarity_threshold = mean(data=all_item_value)- stdev(data=all_item_value)
+        
+        for item in items_available:
+            for _ in range(item.weight):
+                weight_pool.append(item)
+                
+
         for player in session.player_turn_manager.all_player:
             
             if (self._except_player_ids is not None) and (player.id in self._except_player_ids):
@@ -55,7 +59,7 @@ class ItemDistributionCommand(AboveGameCommand):
 
                 item_selected:ItemType = weight_pool[_random_pointer]
 
-                if (item_selected.value < rarity_threshold) and (item_selected in player.inventory.items_tuple):
+                if (item_selected.weight <= rarity_threshold) and (item_selected in player.inventory.items_tuple):
                     continue 
 
                 player.inventory.add_items((item_selected,))

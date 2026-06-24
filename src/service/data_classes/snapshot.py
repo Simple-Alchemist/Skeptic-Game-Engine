@@ -1,8 +1,10 @@
+from typing import TYPE_CHECKING
+from attrs import define
 
-from attrs import define, field
 
-from ..data_classes import States
-from ...core import ItemType, ShellInterface
+if TYPE_CHECKING:
+    from ..data_classes import States   
+from ...core import ItemType
 
 @define(kw_only=True,frozen=True)
 class PlayerSnapshot: 
@@ -26,7 +28,7 @@ class ShotgunSnapshot:
 @define(kw_only=True, frozen=True)
 class GameSnapshot:
     
-    current_state_name: States 
+    current_state_name: "States" 
     turn_data: TurnSnapshot
     player_datas: tuple[PlayerSnapshot,...] 
     shotgun_data: ShotgunSnapshot

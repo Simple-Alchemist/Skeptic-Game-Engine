@@ -14,8 +14,15 @@ class CommandInterface(Protocol):
     def execute(self, session: "Session") -> "Result":
         ...
 
-class InGameCommand(ABC):...
-class AboveGameCommand(ABC):...
+class InGameCommand(ABC): 
+
+    @abstractmethod
+    def execute(self, session: "Session") -> "Result": ...
+
+class AboveGameCommand(ABC):
+
+    @abstractmethod
+    def execute(self, session: "Session") -> "Result":...
 
 class ItemCommandInterface(InGameCommand):
 

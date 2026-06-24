@@ -17,13 +17,15 @@ from .above_game import(
 from .in_game import (
     PeekItemCommand, 
     BananaItemCommand,
-    InverseShellItemCommand,
     EjectorItemCommand,
     TwoFoldItemCommand,
     HandCuffItemCommand, 
     ShootCommand,
     UTurnItemCommand,
-    CharemItemCommand
+    CharemItemCommand,
+    RandomInverseShellItemCommand,
+    BaistaDaustoItemCommand
+    
 
 )
 
@@ -46,7 +48,8 @@ __all__ = [
 
     "PeekItemCommand",
     "BananaItemCommand",
-    "InverseShellItemCommand", 
+    "RandomInverseShellItemCommand",
+    "BaistaDaustoItemCommand", 
     "EjectorItemCommand",
     "TwoFoldItemCommand",
     "HandCuffItemCommand",
