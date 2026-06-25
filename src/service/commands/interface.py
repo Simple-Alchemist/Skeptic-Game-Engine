@@ -33,6 +33,8 @@ class ItemCommandInterface(InGameCommand):
 
 class TargetPlayerCommandInterface(InGameCommand):
 
+
+
     @property
     @abstractmethod
     def target_player_id(self) -> int:

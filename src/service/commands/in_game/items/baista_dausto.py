@@ -52,5 +52,5 @@ class BaistaDaustoItemCommand(ItemCommandInterface, TargetPlayerCommandInterface
         return Result(
                 action_type=ActionType.USE_ITEM,
                 is_success=True,
-                payload=BaistaDaustoPayload(total_leap_back=self._number_of_leap)
+                payload=BaistaDaustoPayload(target_id=self._target_player_id, total_leap_back=self._number_of_leap)
             )

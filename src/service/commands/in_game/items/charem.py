@@ -69,5 +69,5 @@ class CharemItemCommand(ItemCommandInterface):
         return Result(
             action_type=ActionType.USE_ITEM, 
             is_success=True,
-            payload=CharemPayload()
+            payload=CharemPayload(victim_id=random_player.id)
         )

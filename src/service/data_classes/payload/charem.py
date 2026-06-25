@@ -6,3 +6,4 @@ from attrs import define
 class CharemPayload(ItemBasePayload):
 
     item_type: ItemType = ItemType.CHAREM
+    victim_id: int

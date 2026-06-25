@@ -6,4 +6,4 @@ from attrs import define
 class HandCuffPayload(ItemBasePayload):
 
     item_type: ItemType = ItemType.HAND_CUFF
-    ... # code to be written
+    target_id : int

@@ -12,6 +12,7 @@ class GameOverState(StateInterface):
     
     @property
     def name(self) -> States:
+        
         return States.GAME_OVER
 
     def handle(self, command: CommandInterface , session: 'Session') -> Result:

@@ -54,7 +54,7 @@ class HandCuffItemCommand(ItemCommandInterface, TargetPlayerCommandInterface):
 
             action_type=ActionType.USE_ITEM,
             is_success=True,
-            payload=HandCuffPayload(item_type=self._item_type)
+            payload=HandCuffPayload(item_type=self._item_type, target_id=self._target_player_id)
 
             )
 

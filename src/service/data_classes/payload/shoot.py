@@ -4,4 +4,5 @@ from attrs import define
 @define(kw_only=True)
 class ShootPayload(BasePayload):
     damage_dealt: int
+    target_id: int
     advance_turn: bool
