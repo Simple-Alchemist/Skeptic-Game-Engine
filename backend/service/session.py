@@ -151,11 +151,10 @@ class Session:
         ptm = self.player_turn_manager
 
         for player_data in player_snaps: 
-
-            target_player: Player = Player(id=player_data.id, health=player_data.health)
-
+            
             if not ptm.is_player_in_order(player_id=player_data.id):
 
+                target_player: Player = Player(id=player_data.id, health=player_data.health)
                 ptm.add_player(player_obj=target_player)
 
             target_player = ptm.get_player(player_id=player_data.id) 

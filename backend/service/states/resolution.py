@@ -4,7 +4,7 @@ if TYPE_CHECKING:
     from ..session import Session
 
 from . import StateInterface
-from ...core import LiveShell, BlankShell
+from random import randint
 from ..commands.interface import CommandInterface
 from ..data_classes import Result, ActionType, ErrorType, States
 
@@ -29,16 +29,20 @@ class ResolutionState(StateInterface):
 
         #A bit of clean Up
         # iterate over a copy since we may remove players from the turn order
-        for player in list(ptm.all_player):
-               if not player.is_alive: 
-                   ptm.remove_player(player_id=player.id)
+
+        before_player_size, after_player_size = ptm.total_player, 0
+        for player in ptm.all_player:
+            if not player.is_alive: 
+                ptm.remove_player(player_id=player.id)
         
+        else: 
+            after_player_size = ptm.total_player
+
         #Checking whether the game is over or not
         if not ptm.is_player_sufficient:
     
             session.change_state(new_state_enum=States.GAME_OVER, trigger_enter=False)
             return 
-        
         
         max_skips = len(ptm.all_player)  # Safety: avoid infinite loop
         skips = 0
@@ -55,16 +59,19 @@ class ResolutionState(StateInterface):
                 continue
             
             break 
-
         
         has_live = any(s.damage >= 1 for s in session.shotgun.magazine_order)
         has_blank = any(s.damage < 1 for s in session.shotgun.magazine_order)
-        if not (has_live and has_blank): 
+
+        if not (has_live and has_blank) or before_player_size > after_player_size: 
             #When there's no Combination of Live-Blank Shell, it will clear out the magazine
 
             session.shotgun.clear_magazine()
+            ptm.reset_pointer()
+
+            ptm.advance(turns=randint(1,ptm.total_player))
            
-            for player in session.player_turn_manager.all_player:
+            for player in ptm.all_player:
                player.inventory.clear()
 
             session.change_state(new_state_enum=States.ROUND_MANAGER, trigger_enter=False)

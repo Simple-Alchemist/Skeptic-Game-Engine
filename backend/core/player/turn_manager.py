@@ -100,6 +100,8 @@ class PlayerTurnManager:
  
         self._direction = self._direction * -1
 
+    def reset_pointer(self) -> None: 
+        self._pointer = 0
 
     def clear_reset_order(self) -> None: 
 

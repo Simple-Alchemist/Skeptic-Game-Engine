@@ -29,7 +29,7 @@ class ShootCommand(TargetPlayerCommandInterface):
         targeted_player = ptm.get_player(self._target_player_id)
 
         if targeted_player.health < fired_shell.damage:
-            targeted_player.adjust_health(targeted_player.health)
+            targeted_player.adjust_health(-targeted_player.health)
         else: 
             targeted_player.adjust_health(-fired_shell.damage)
 
@@ -39,6 +39,7 @@ class ShootCommand(TargetPlayerCommandInterface):
             is_success=True,
             payload=ShootPayload(
                 damage_dealt=fired_shell.damage, 
+                shooter_id=ptm.current_player.id,
                 target_id=self._target_player_id,
                 advance_turn= not (
                     fired_shell.damage <= 0 and self._target_player_id == ptm.current_player.id

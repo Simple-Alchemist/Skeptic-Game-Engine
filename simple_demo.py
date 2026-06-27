@@ -29,7 +29,7 @@ bot_result: Result | None = None
 lives,blanks = 0,0
 
 
-for i in range(1,3):
+for i in range(1,4):
     session.game_command(command=AddPlayerCommand(id=i, health=3))
 
 while session.current_state_name != States.GAME_OVER:
@@ -37,17 +37,16 @@ while session.current_state_name != States.GAME_OVER:
     if session.current_state_name == States.ROUND_MANAGER:
         
         print("Loading Shells...")
-        time.sleep(5)
-        lives,blanks = randint(3,4),randint(1,3)
+        time.sleep(2)
+        lives,blanks = randint(4,6),randint(3,5)
         result = session.game_command(ShotgunLoadCommand(lives=lives,blanks=blanks))
-        print(f"shells - lives: {lives}, blanks: {blanks}")
         print("Distributing Items...")
-        time.sleep(5)
-        session.game_command(command=ItemDistributionCommand(max_item=2,except_item_type=(ItemType.BAISTA_DAUSTO, ItemType.U_TURN)))
+        time.sleep(2)
+        session.game_command(command=ItemDistributionCommand(max_item=4,except_item_type=(ItemType.BAISTA_DAUSTO, ItemType.U_TURN)))
     
 
         print("Starting the round")
-        time.sleep(5)
+        time.sleep(2)
         result = session.game_command(command=StartRoundCommand()) 
 
         if not result.is_success:
@@ -125,7 +124,7 @@ while session.current_state_name != States.GAME_OVER:
     else: 
 
         gs = session.export_game_snapshot() 
-
+        # print(bot_result)
         bot = BotAlgorithm(gs=gs, last_result=bot_result)
 
         print(f"{session.player_turn_manager.current_player.id} is Thinking hard....")

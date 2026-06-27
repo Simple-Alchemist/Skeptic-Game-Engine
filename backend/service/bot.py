@@ -149,8 +149,11 @@ class BotAlgorithm:
                 item_values[ItemType.HAND_CUFF] = 100
                 
             if ItemType.TWO_FOLD in inventory_set:
-
-                item_values[ItemType.TWO_FOLD] = live_probability 
+                
+                if live_probability >= 75:
+                    item_values[ItemType.TWO_FOLD] = 100 
+                else: 
+                    item_values[ItemType.TWO_FOLD] = live_probability
                 
             if ItemType.PEEK_SHOTGUN in inventory_set:
                 
