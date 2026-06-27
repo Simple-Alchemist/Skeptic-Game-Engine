@@ -3,10 +3,10 @@
 import time 
 from random import randint
 
-from src.api import Session, BotAlgorithm, InGameCommandFactory, Result
-from src.api.commmands import AddPlayerCommand, ItemDistributionCommand,ShotgunLoadCommand, StartRoundCommand
-from src.api.enum_type import States, ItemType
-from src.api.payload import ShellPayload, ShootPayload
+from backend.api import Session, BotAlgorithm, InGameCommandFactory, Result
+from backend.api.commmands import AddPlayerCommand, ItemDistributionCommand,ShotgunLoadCommand, StartRoundCommand
+from backend.api.enum_type import States, ItemType
+from backend.api.payload import ShellPayload, ShootPayload
 
 session = Session()
 
