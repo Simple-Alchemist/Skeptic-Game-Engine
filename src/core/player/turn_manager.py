@@ -99,7 +99,7 @@ class PlayerTurnManager:
     def reverse_order(self) -> None:
  
         self._direction = self._direction * -1
-        self._pointer = 0
+
 
     def clear_reset_order(self) -> None: 
 

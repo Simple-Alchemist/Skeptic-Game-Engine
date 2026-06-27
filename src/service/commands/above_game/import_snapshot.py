@@ -28,9 +28,10 @@ class ImportPlayerSnapshotCommand(AboveGameCommand):
     
     _player_snapshots: tuple[PlayerSnapshot,...] 
 
-    def execute(self, sesssion: 'Session') -> Result: 
+
+    def execute(self, session: 'Session') -> Result: 
         
-        sesssion.import_players_snapshot(player_snaps=self._player_snapshots)
+        session.import_players_snapshot(player_snaps=self._player_snapshots)
 
         return Result(
             action_type=ActionType.IMPORT_PLAYERS, 
