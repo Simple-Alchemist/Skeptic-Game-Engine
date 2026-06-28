@@ -4,7 +4,7 @@ import time
 from random import randint
 
 from backend.api import Session, BotAlgorithm, InGameCommandFactory, Result
-from backend.api.commmands import AddPlayerCommand, ItemDistributionCommand,ShotgunLoadCommand, StartRoundCommand
+from backend.api.commmands import AddPlayerCommand, ItemDistributionCommand,ShotgunLoadCommand, StartRoundCommand, AddItemCommand
 from backend.api.enum_type import States, ItemType
 from backend.api.payload import ShellPayload, ShootPayload
 
@@ -30,7 +30,7 @@ lives,blanks = 0,0
 
 
 for i in range(1,4):
-    session.game_command(command=AddPlayerCommand(id=i, health=3))
+    session.game_command(command=AddPlayerCommand(id=i, health=5))
 
 while session.current_state_name != States.GAME_OVER:
 
@@ -38,12 +38,15 @@ while session.current_state_name != States.GAME_OVER:
         
         print("Loading Shells...")
         time.sleep(2)
-        lives,blanks = randint(4,6),randint(3,5)
+        lives,blanks = randint(8,10),randint(7,10)
         result = session.game_command(ShotgunLoadCommand(lives=lives,blanks=blanks))
         print("Distributing Items...")
         time.sleep(2)
-        session.game_command(command=ItemDistributionCommand(max_item=4,except_item_type=(ItemType.BAISTA_DAUSTO, ItemType.U_TURN)))
-    
+        session.game_command(command=ItemDistributionCommand(
+            max_item=4,
+            except_item_type=(ItemType.BAISTA_DAUSTO, ItemType.U_TURN),
+            )
+        )
 
         print("Starting the round")
         time.sleep(2)
@@ -62,7 +65,7 @@ while session.current_state_name != States.GAME_OVER:
     lives = sum(shell.damage >= 1 for shell in session.shotgun.magazine_order)
     blanks = sum(shell.damage < 1 for shell in session.shotgun.magazine_order)
 
-    time.sleep(5)
+    time.sleep(1)
     print(f"shotgun: {lives*"🔴"}{blanks*"🟢"} ", end= "\n\n")
     time.sleep(2)
     
@@ -124,11 +127,11 @@ while session.current_state_name != States.GAME_OVER:
     else: 
 
         gs = session.export_game_snapshot() 
-        # print(bot_result)
+        # print(f"bot's previous result: {bot_result}")
         bot = BotAlgorithm(gs=gs, last_result=bot_result)
 
         print(f"{session.player_turn_manager.current_player.id} is Thinking hard....")
-        time.sleep(5)
+        time.sleep(2)
 
         bot_response = bot.think() 
 
@@ -136,6 +139,7 @@ while session.current_state_name != States.GAME_OVER:
         time.sleep(2)
 
         bot_result = session.game_command(bot_response)
+        # print(f"bot's current result: {bot_result}")
 
         if not bot_result.is_success: 
             print("Something went wrong, please de-bug")

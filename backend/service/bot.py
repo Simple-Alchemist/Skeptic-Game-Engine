@@ -80,9 +80,9 @@ class BotAlgorithm:
             player_strength_dict.append((player_strength, player_data.id))
             total_strength_list.append(player_strength)
 
-            self._bot_relative_strength = bot_strength/sum(total_strength_list)
+            self._bot_relative_strength = (bot_strength*100)/sum(total_strength_list)
 
-            player_strength_dict.sort(key=lambda x: x[0], reverse=True)
+            player_strength_dict.sort(key=lambda x: x[0])
 
         return tuple(x[1] for x in player_strength_dict)
         
@@ -92,8 +92,8 @@ class BotAlgorithm:
         # 1. Target Analysis
         players_spectrum: tuple[int,...] = self.__players_analysis()
 
-        target_enemy = players_spectrum[0] 
-        target_weakest = players_spectrum[-1] 
+        target_enemy = players_spectrum[-1] 
+        target_weakest = players_spectrum[0] 
 
         # 2. Base Probability Calculation
         total_shells = self._game_snapshot.shotgun_data.blanks + self._game_snapshot.shotgun_data.lives
@@ -106,6 +106,7 @@ class BotAlgorithm:
             
             if isinstance(payload_data, payload.ShellPayload):
                 if payload_data.item_type == ItemType.TWO_FOLD:
+                    live_probability = 100
                     force_shoot = True
                 
     
@@ -121,9 +122,9 @@ class BotAlgorithm:
             inventory_set = set(self._bot_inventory)
 
             if ItemType.INVERSE_SHELL in inventory_set:
-
-                if 25 >= live_probability >= 75:
-                    force_shoot = True
+                
+                if live_probability < 25 or live_probability > 75:
+                    force_shoot=  True
 
                 else: 
 
@@ -132,7 +133,7 @@ class BotAlgorithm:
                 
             if ItemType.EJECTOR in inventory_set:
                 
-                if 25 >= live_probability >= 75:
+                if live_probability < 25 or live_probability > 75:
                     force_shoot=  True
 
                 elif live_probability > 50: 
@@ -150,10 +151,12 @@ class BotAlgorithm:
                 
             if ItemType.TWO_FOLD in inventory_set:
                 
-                if live_probability >= 75:
+                if live_probability > 75:
                     item_values[ItemType.TWO_FOLD] = 100 
-                else: 
-                    item_values[ItemType.TWO_FOLD] = live_probability
+
+                elif live_probability < 25: 
+
+                    force_shoot= True
                 
             if ItemType.PEEK_SHOTGUN in inventory_set:
                 
@@ -169,7 +172,10 @@ class BotAlgorithm:
             if ItemType.CHAREM in inventory_set:
 
                 if self._bot_relative_strength < 50:
-                    item_values[ItemType.CHAREM] = 100 - self._bot_relative_strength
+                    item_values[ItemType.CHAREM] = 100 - self._bot_relative_strength 
+                
+                else:
+                    force_shoot = True
 
         else: 
 
@@ -182,7 +188,7 @@ class BotAlgorithm:
                                 
             best_item = max(self._bot_inventory, key=lambda item: item_values.get(item, 0))
             
-            final_command = InGameCommandFactory.manufacture_item_command(item_type=best_item, target_player_id =target_enemy )
+            final_command = InGameCommandFactory.manufacture_item_command(item_type=best_item, target_player_id=target_enemy)
             return final_command
             
         else:
