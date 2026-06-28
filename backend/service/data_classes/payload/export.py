@@ -1,4 +1,4 @@
-from .base import BasePayload
+from ._base import BasePayload
 from ..snapshot import GameSnapshot, PlayerSnapshot
 from attrs import define
 

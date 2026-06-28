@@ -1,4 +1,4 @@
-from .base import ItemBasePayload
+from ._base import ItemBasePayload
 from ....core import ItemType
 from attrs import define
 
@@ -6,4 +6,5 @@ from attrs import define
 class HandCuffPayload(ItemBasePayload):
 
     item_type: ItemType = ItemType.HAND_CUFF
-    target_id : int
+    user_id: int
+    target_id: int

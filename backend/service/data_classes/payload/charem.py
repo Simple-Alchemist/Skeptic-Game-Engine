@@ -1,4 +1,4 @@
-from .base import ItemBasePayload
+from ._base import ItemBasePayload
 from ....core import ItemType
 from attrs import define
 
@@ -6,4 +6,5 @@ from attrs import define
 class CharemPayload(ItemBasePayload):
 
     item_type: ItemType = ItemType.CHAREM
+    polnareff_id: int
     victim_id: int

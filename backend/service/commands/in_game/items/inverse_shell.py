@@ -37,7 +37,7 @@ class RandomInverseShellItemCommand(ItemCommandInterface):
 
             action_type=ActionType.USE_ITEM,
             is_success=True,
-            payload=InversePayload(item_type=self._item_type)
+            payload=InversePayload(damage_before_inversion=random_shell.damage,damage_after_inversion=new_shell.damage)
           
         )
 

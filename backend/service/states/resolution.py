@@ -70,9 +70,6 @@ class ResolutionState(StateInterface):
             ptm.reset_pointer()
 
             ptm.advance(turns=randint(1,ptm.total_player))
-           
-            for player in ptm.all_player:
-               player.inventory.clear()
 
             session.change_state(new_state_enum=States.ROUND_MANAGER, trigger_enter=False)
             return

@@ -29,5 +29,5 @@ class UTurnItemCommand(ItemCommandInterface):
 
             action_type=ActionType.USE_ITEM,
             is_success=True,
-            payload=UTurnPayload()
+            payload=UTurnPayload(direction=session.player_turn_manager.direction)
         )

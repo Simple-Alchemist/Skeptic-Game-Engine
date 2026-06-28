@@ -22,7 +22,7 @@ class RoundManagerState(StateInterface):
             return Result( 
                 action_type=ActionType.CMD_OBJ_PASSED,
                 is_success=False, 
-                error_type=ErrorType.INCORRECT_COMMAND_FOR_THE_STATE
+                error_type=ErrorType.CURRENTLY_IN_ROUNDMANAGER_STATE
             )
         
         result = command.execute(session=session)

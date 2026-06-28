@@ -30,7 +30,7 @@ lives,blanks = 0,0
 
 
 for i in range(1,4):
-    session.game_command(command=AddPlayerCommand(id=i, health=5))
+    session.game_command(command=AddPlayerCommand(id=i, health=5, inventory_limit=5))
 
 while session.current_state_name != States.GAME_OVER:
 
@@ -38,16 +38,16 @@ while session.current_state_name != States.GAME_OVER:
         
         print("Loading Shells...")
         time.sleep(2)
-        lives,blanks = randint(8,10),randint(7,10)
+        lives,blanks = randint(4,5),randint(4,5)
         result = session.game_command(ShotgunLoadCommand(lives=lives,blanks=blanks))
         print("Distributing Items...")
         time.sleep(2)
         session.game_command(command=ItemDistributionCommand(
-            max_item=4,
+            max_item=5,
             except_item_type=(ItemType.BAISTA_DAUSTO, ItemType.U_TURN),
             )
         )
-
+        
         print("Starting the round")
         time.sleep(2)
         result = session.game_command(command=StartRoundCommand()) 
@@ -71,7 +71,7 @@ while session.current_state_name != States.GAME_OVER:
     
     if session.player_turn_manager.current_player.id == 1: 
 
-        print("You are player with ID: 0")
+        print("You are player with ID: 1")
         
         while True: 
             prompt = input("Do you want to use an 'Item' or you better off 'shoot'?: ")

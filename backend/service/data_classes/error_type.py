@@ -6,6 +6,7 @@ class ErrorType(IntEnum):
     INSUFFICIENT_PLAYERS = auto()
     EMPTY_MAGAZINE = auto()
     ITEM_NOT_IN_INVENTORY = auto()
+    REACHED_INVENTORYS_LIMIT= auto()
     HAND_CUFFING_YOURSELF = auto()
     CURRENT_PLAYER_CUFFED = auto()
     ALREADY_CUFFED = auto()
@@ -13,6 +14,8 @@ class ErrorType(IntEnum):
     EMPTY_WEIGHT_POOL = auto()
 
 
-    INCORRECT_COMMAND_FOR_THE_STATE = auto()
+
+    CURRENTLY_IN_ROUNDMANAGER_STATE = auto()
     CURRENTLY_IN_RESOLUTION_STATE = auto()
+    CURRENTLY_IN_PLAY_STATE = auto()
     GAME_OVER = auto()

@@ -64,10 +64,14 @@ class CharemItemCommand(ItemCommandInterface):
         session.import_players_snapshot(player_snaps=new_player_snaps)
 
         random_player.inventory.remove_item(item=ItemType.CHAREM)
-        ptm.current_player.inventory.add_items(item_tuple=(ItemType.CHAREM,))
+        ptm.current_player.inventory.add_items(item_tuple=(ItemType.CHAREM,), forced=True)
+        
 
         return Result(
             action_type=ActionType.USE_ITEM, 
             is_success=True,
-            payload=CharemPayload(victim_id=random_player.id)
+            payload=CharemPayload(
+                polnareff_id=ptm.current_player.id,
+                victim_id=random_player.id
+                )
         )

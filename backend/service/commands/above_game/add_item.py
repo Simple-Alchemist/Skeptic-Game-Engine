@@ -28,6 +28,13 @@ class AddItemCommand(AboveGameCommand):
 
         target_player = session.player_turn_manager.get_player(player_id=self._player_id)
 
+        if target_player.inventory.reached_limit: 
+            return Result(
+
+                action_type= ActionType.ADD_ITEM,
+                is_success=False,
+                error_type=ErrorType.REACHED_INVENTORYS_LIMIT
+                )
 
         target_player.inventory.add_items(self._items)
 

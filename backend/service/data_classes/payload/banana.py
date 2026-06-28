@@ -1,4 +1,4 @@
-from .base import ItemBasePayload
+from ._base import ItemBasePayload
 from ....core import ItemType
 from attrs import define
 

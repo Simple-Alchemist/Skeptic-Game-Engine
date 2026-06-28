@@ -12,6 +12,7 @@ from .data_classes import (
     GameSnapshot, 
     Result, 
     payload,
+    ErrorType
 
 )
 
@@ -114,8 +115,10 @@ class BotAlgorithm:
                 if payload_data.item_type == ItemType.PEEK_SHOTGUN:
                     live_probability = 100.0 if payload_data.shell_damage >= 1 else 0.0
 
+
         item_values: dict[ItemType, float] = {}
-        
+
+            
 
         if len(self._bot_inventory) > 0:
             # Converting inventory to a set so we evaluate items we actually own (getting rid of duplication)
@@ -146,8 +149,13 @@ class BotAlgorithm:
                     item_values[ItemType.EJECTOR] = 100
                 
             if ItemType.HAND_CUFF in inventory_set:
+                if isinstance(self._last_result, Result):
 
-                item_values[ItemType.HAND_CUFF] = 100
+                    if self._last_result.error_type == ErrorType.ALREADY_CUFFED: 
+                            force_shoot= True
+                    else:
+
+                        item_values[ItemType.HAND_CUFF] = 100
                 
             if ItemType.TWO_FOLD in inventory_set:
                 
@@ -171,11 +179,19 @@ class BotAlgorithm:
                 
             if ItemType.CHAREM in inventory_set:
 
-                if self._bot_relative_strength < 50:
+                if self._bot_relative_strength < 25:
                     item_values[ItemType.CHAREM] = 100 - self._bot_relative_strength 
+
+            # if ItemType.BAISTA_DAUSTO in inventory_set: 
+              
+            #   if isinstance(self._last_result, Result):
                 
-                else:
-                    force_shoot = True
+            #         if self._last_result.error_type == ErrorType.SHORT_HISTORY: 
+            #                 force_shoot = True
+            #         else:
+                            
+            #             if self._bot_relative_strength < 15:
+            #                 item_values[ItemType.BAISTA_DAUSTO] = 100
 
         else: 
 
@@ -183,17 +199,26 @@ class BotAlgorithm:
 
 
         from ..api import InGameCommandFactory  
+
         if not force_shoot :
 
                                 
             best_item = max(self._bot_inventory, key=lambda item: item_values.get(item, 0))
             
             final_command = InGameCommandFactory.manufacture_item_command(item_type=best_item, target_player_id=target_enemy)
+
+            # if best_item == ItemType.BAISTA_DAUSTO:
+
+            #     if self._bot_relative_strength < 25:
+
+            #         final_command = InGameCommandFactory.manufacture_item_command(item_type=best_item, target_player_id=self._bot_id)
+
             return final_command
             
         else:
             
-            if live_probability >= 50: 
+            if live_probability >= 50 or (live_probability <= 25 and self._bot_health_contri <= 25): 
+
                 return InGameCommandFactory.manufacture_shoot_command(target_player_id=target_weakest)
 
             else:  

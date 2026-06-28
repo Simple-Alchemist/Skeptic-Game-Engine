@@ -7,7 +7,6 @@ from . import StateInterface
 from ..commands.interface import CommandInterface, ItemCommandInterface, TargetPlayerCommandInterface, InGameCommand
 from ..data_classes import Result, ActionType, ErrorType, States, ShootPayload
 
-
 class PlayState(StateInterface):
 
     @property
@@ -23,7 +22,7 @@ class PlayState(StateInterface):
                 return Result(
                         action_type=ActionType.CMD_OBJ_PASSED,
                         is_success=False,
-                        error_type=ErrorType.INCORRECT_COMMAND_FOR_THE_STATE
+                        error_type=ErrorType.CURRENTLY_IN_PLAY_STATE 
                     )  
 
         if isinstance(command, TargetPlayerCommandInterface):

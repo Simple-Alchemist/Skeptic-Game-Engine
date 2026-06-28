@@ -3,7 +3,7 @@ from attrs import define
 
 from .action_type import ActionType
 from .error_type import ErrorType
-from .payload.base import BasePayload
+from .payload._base import BasePayload
 
 @define(kw_only=True)
 class Result:

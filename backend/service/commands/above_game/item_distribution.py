@@ -58,6 +58,9 @@ class ItemDistributionCommand(AboveGameCommand):
                 _random_pointer = randint(0, len(weight_pool)-1)
 
                 item_selected:ItemType = weight_pool[_random_pointer]
+                
+                if player.inventory.reached_limit: 
+                    break
 
                 if (item_selected.weight <= rarity_threshold) and (item_selected in player.inventory.items_tuple):
                     continue 

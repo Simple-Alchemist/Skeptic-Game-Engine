@@ -22,12 +22,17 @@ class Player:
     _inventory: Inventory 
         Stores all Item 
     """
+
     _id: int = field(on_setattr=setters.frozen, validator=ge(0), alias="id")
     _health: int = field(alias="health")
     _cuffed: bool = field(default=False, init=False)
-    _inventory: Inventory = field(factory=Inventory, init=False)
+    _inventory_limit: int = field(default=4, alias="inventory_limit")
+    _inventory: Inventory = field(init=False)
 
     def __attrs_post_init__(self):
+
+        self._inventory = Inventory(self._inventory_limit)
+        
         """Making sure that the Health Value passed is not less or equal to zero"""
         if self._health == 0: 
             

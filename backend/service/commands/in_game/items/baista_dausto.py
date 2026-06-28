@@ -36,10 +36,19 @@ class BaistaDaustoItemCommand(ItemCommandInterface, TargetPlayerCommandInterface
                     is_success=False,
                     error_type=ErrorType.SHORT_HISTORY
                 )        
+        
 
+        current_player_id = session.player_turn_manager.current_player.id
+        
         target_player_data = session.export_players_snapshot(player_ids=(self._target_player_id,))
+
         session.leap_back(self._number_of_leap)  
         session.import_players_snapshot(player_snaps=target_player_data)
+
+        current_player = session.player_turn_manager.get_player(player_id=current_player_id)
+        
+        if self._item_type in current_player.inventory.items_tuple: 
+            current_player.inventory.remove_item(item=ItemType.BAISTA_DAUSTO)
 
         all_player = session.player_turn_manager.all_player
 
@@ -48,9 +57,13 @@ class BaistaDaustoItemCommand(ItemCommandInterface, TargetPlayerCommandInterface
                 session.player_turn_manager.advance()
             else: 
                 break
-        
+
         return Result(
                 action_type=ActionType.USE_ITEM,
                 is_success=True,
-                payload=BaistaDaustoPayload(target_id=self._target_player_id, total_leap_back=self._number_of_leap)
+                payload=BaistaDaustoPayload(
+                    yoshikage_id=current_player.id,
+                    target_id=self._target_player_id, 
+                    total_leap_back=self._number_of_leap
+                    )
             )

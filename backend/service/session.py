@@ -175,6 +175,10 @@ class Session:
 
         self._history.append(self.export_game_snapshot())
 
+    def clear_history(self): 
+        
+        self._history.clear()
+
     def leap_back(self, leap: int = 3):
 
         if self.history_span <= leap:
