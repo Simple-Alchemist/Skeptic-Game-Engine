@@ -27,9 +27,9 @@ class ExportPlayerSnapshotCommand(AboveGameCommand):
 
     player_ids: tuple[int,...] 
 
-    def execute(self, sesssion: 'Session') -> Result: 
+    def execute(self, session: 'Session') -> Result: 
         
-        player_snapshots = sesssion.export_players_snapshot(player_ids=self.player_ids)
+        player_snapshots = session.export_players_snapshot(player_ids=self.player_ids)
 
         return Result(
             action_type=ActionType.EXPORT_PLAYERS, 

@@ -5,7 +5,7 @@ from attrs import define,field
 if TYPE_CHECKING: 
     from ...session import Session
 
-from ...data_classes import Result, ActionType, ErrorType
+from ...data_classes import Result, ActionType, ErrorType, AddItemPayload
 from ....core import  ItemType
 from ..interface import AboveGameCommand
 
@@ -20,10 +20,9 @@ class AddItemCommand(AboveGameCommand):
         if not session.player_turn_manager.is_player_in_order(player_id=self._player_id):
             return Result(
 
-                action_type= ActionType.ADD_ITEM,
+                action_type= ActionType.ADDING_ITEM_TO_INVENTORY,
                 is_success=False,
                 error_type=ErrorType.UNKNOWN_PLAYER
-                #Adding a Pay load stating what is being added
                 )
 
         target_player = session.player_turn_manager.get_player(player_id=self._player_id)
@@ -31,7 +30,7 @@ class AddItemCommand(AboveGameCommand):
         if target_player.inventory.reached_limit: 
             return Result(
 
-                action_type= ActionType.ADD_ITEM,
+                action_type= ActionType.ADDING_ITEM_TO_INVENTORY,
                 is_success=False,
                 error_type=ErrorType.REACHED_INVENTORYS_LIMIT
                 )
@@ -40,7 +39,7 @@ class AddItemCommand(AboveGameCommand):
 
         return Result(
 
-            action_type= ActionType.ADD_ITEM,
+            action_type= ActionType.ADDING_ITEM_TO_INVENTORY,
             is_success=True,
-            #Adding a Pay load stating what is being added
+            payload=AddItemPayload(player_id=self._player_id, items_added=self._items)
             )

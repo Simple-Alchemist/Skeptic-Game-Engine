@@ -5,8 +5,7 @@ from attrs import define,field
 if TYPE_CHECKING: 
     from ...session import Session
 
-from ...data_classes import Result, ActionType, ErrorType, GameSnapshot, PlayerSnapshot
-from ....core import  ItemType
+from ...data_classes import Result, ActionType,  GameSnapshot, PlayerSnapshot
 from ..interface import AboveGameCommand
 
 @define(kw_only=True)

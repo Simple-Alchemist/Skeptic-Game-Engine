@@ -15,7 +15,7 @@ class StartRoundCommand(AboveGameCommand):
 
     def execute(self, session: 'Session') -> Result:
 
-        session.change_state(new_state_enum=States.RESOLUTION_STATE, trigger_enter=True)
+        session.change_state(new_state_enum=States.RESOLUTION, trigger_enter=True)
 
         return Result(
 

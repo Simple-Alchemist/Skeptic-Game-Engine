@@ -11,7 +11,7 @@ class PlayState(StateInterface):
 
     @property
     def name(self) -> States:
-        return States.PLAY_STATE
+        return States.PLAY
 
     def handle(self, command: CommandInterface , session: 'Session') -> Result:
 
@@ -58,7 +58,7 @@ class PlayState(StateInterface):
                 if result.payload.advance_turn:
                     session.player_turn_manager.advance() 
                 
-            session.change_state(new_state_enum=States.RESOLUTION_STATE, trigger_enter=True)
+            session.change_state(new_state_enum=States.RESOLUTION, trigger_enter=True)
 
         return result
 

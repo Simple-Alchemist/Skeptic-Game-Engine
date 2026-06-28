@@ -13,7 +13,7 @@ class ResolutionState(StateInterface):
 
     @property
     def name(self) -> States:
-        return States.RESOLUTION_STATE
+        return States.RESOLUTION
 
     def handle(self, command: CommandInterface, session: 'Session') -> Result:
 
@@ -79,6 +79,6 @@ class ResolutionState(StateInterface):
 
         #Else -> Continue Transitioning to PlayState
         
-        session.change_state(new_state_enum=States.PLAY_STATE, trigger_enter=False)
+        session.change_state(new_state_enum=States.PLAY, trigger_enter=False)
 
 

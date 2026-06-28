@@ -1,12 +1,19 @@
 
 from .shoot import ShootPayload
-from .shell import ShellPayload
-from .inverse import InversePayload
-from .handcuff import HandCuffPayload
-from .banana import BananaPayload
-from .baista_dausto import BaistaDaustoPayload
+from .items import (
+    ShellPayload, 
+    InversePayload, 
+    HandCuffPayload, 
+    BananaPayload, 
+    BaistaDaustoPayload, 
+    CharemPayload,
+    UTurnPayload
+    
+)
+
+from .inventory import AddItemPayload, RemoveItemPayload, ItemDistributionPayload
+
 from .export import ExportGameSnapshotPayload, ExportPlayerSnapshotPayload
-from .charem import CharemPayload
 
 __all__ = [
     "ShootPayload",
@@ -19,5 +26,9 @@ __all__ = [
     "ExportGameSnapshotPayload",
     "ExportPlayerSnapshotPayload",
 
+
+    "AddItemPayload",
+    "RemoveItemPayload", 
+    "ItemDistributionPayload"
 
     ]

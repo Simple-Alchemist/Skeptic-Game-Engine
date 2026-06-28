@@ -151,7 +151,7 @@ class BotAlgorithm:
             if ItemType.HAND_CUFF in inventory_set:
                 if isinstance(self._last_result, Result):
 
-                    if self._last_result.error_type == ErrorType.ALREADY_CUFFED: 
+                    if self._last_result.error_type == ErrorType.PLAYER_ALREADY_CUFFED: 
                             force_shoot= True
                     else:
 

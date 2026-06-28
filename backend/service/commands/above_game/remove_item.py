@@ -5,7 +5,7 @@ from attrs import define,field
 if TYPE_CHECKING: 
     from ...session import Session
 
-from ...data_classes import Result, ActionType, ErrorType
+from ...data_classes import Result, ActionType, ErrorType, RemoveItemPayload
 from ....core import  ItemType
 from ..interface import AboveGameCommand
 
@@ -20,7 +20,7 @@ class RemoveItemCommand(AboveGameCommand):
         if not session.player_turn_manager.is_player_in_order(player_id=self._player_id):
             return Result(
 
-                action_type= ActionType.REMOVE_ITEM,
+                action_type= ActionType.REMOVING_ITEM_FROM_INVENTORY,
                 is_success=False,
                 error_type=ErrorType.UNKNOWN_PLAYER
                 )
@@ -31,7 +31,7 @@ class RemoveItemCommand(AboveGameCommand):
 
             return Result(
 
-                action_type= ActionType.REMOVE_ITEM,
+                action_type= ActionType.REMOVING_ITEM_FROM_INVENTORY,
                 is_success=False,
                 error_type=ErrorType.ITEM_NOT_IN_INVENTORY
                 )
@@ -42,7 +42,7 @@ class RemoveItemCommand(AboveGameCommand):
 
         return Result(
 
-            action_type= ActionType.REMOVE_ITEM,
+            action_type= ActionType.REMOVING_ITEM_FROM_INVENTORY,
             is_success=True,
-            #Adding a Pay load stating what is being added
+            payload=RemoveItemPayload(player_id=self._player_id, items_removed=self._items)
             )

@@ -20,7 +20,7 @@ class GameOverState(StateInterface):
         return Result(
             action_type=ActionType.CMD_OBJ_PASSED,
             is_success=False,
-            error_type=ErrorType.GAME_OVER
+            error_type=ErrorType.CURRENTLY_IN_GAMEOVER_STATE
         ) 
     
     def enter(self, session: 'Session'): 

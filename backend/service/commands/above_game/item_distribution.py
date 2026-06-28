@@ -7,7 +7,7 @@ from attrs import define, field
 if TYPE_CHECKING: 
     from ...session import Session
 
-from ...data_classes import Result, ActionType, ErrorType
+from ...data_classes import Result, ActionType, ErrorType, ItemDistributionPayload
 from ....core import ItemType
 from ..interface import AboveGameCommand
 
@@ -73,4 +73,4 @@ class ItemDistributionCommand(AboveGameCommand):
 
             action_type= ActionType.ITEM_DISTRIBUTION,
             is_success=True,
-            )
+        )

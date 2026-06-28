@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from ....session import Session
 
 from ....data_classes import Result, ActionType
-from ....data_classes.payload.u_turn import UTurnPayload
+from ....data_classes.payload import UTurnPayload
 from ...interface import ItemCommandInterface
 from .....core import ItemType
 

@@ -4,6 +4,7 @@ from attrs import define
 
 if TYPE_CHECKING:
     from ..data_classes import States   
+    
 from ...core import ItemType
 
 @define(kw_only=True,frozen=True)

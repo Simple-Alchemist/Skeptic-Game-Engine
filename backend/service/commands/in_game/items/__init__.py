@@ -13,6 +13,7 @@ from .charem import CharemItemCommand
 from .baista_dausto import BaistaDaustoItemCommand
 
 __all__ = [
+
     "BananaItemCommand",
     "DoubleLiveShell",
     "EjectorItemCommand",
@@ -21,5 +22,6 @@ __all__ = [
     "PeekItemCommand",
     "TwoFoldItemCommand",
     "UTurnItemCommand",
-    "CharemItemCommand"
+    "CharemItemCommand",
+    "BaistaDaustoItemCommand"
 ]

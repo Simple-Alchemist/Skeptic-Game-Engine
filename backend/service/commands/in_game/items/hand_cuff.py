@@ -45,7 +45,7 @@ class HandCuffItemCommand(ItemCommandInterface, TargetPlayerCommandInterface):
             return Result(
                 action_type=ActionType.USE_ITEM,
                 is_success=False,
-                error_type=ErrorType.ALREADY_CUFFED
+                error_type=ErrorType.PLAYER_ALREADY_CUFFED
             )
             
         targeted_player.hand_cuff() 
