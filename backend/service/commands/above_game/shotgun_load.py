@@ -27,15 +27,14 @@ class ShotgunLoadCommand(AboveGameCommand):
 
         for _ in range(0, self.blanks):
             magazine_list.append(BlankShell())
-
        
         shuffle(magazine_list)
 
-        session.shotgun.load_shells(tuple(magazine_list))
-        
+        session.shotgun.load_shells(tuple(magazine_list))      
 
         return Result(
 
             action_type= ActionType.LOAD_SHELL_RANDOMLY_IN_SHOTGUN,
             is_success=True,
-            )
+
+        )

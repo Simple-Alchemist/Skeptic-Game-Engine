@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from .interface import StateInterface
-from ..commands.interface import CommandInterface, AboveGameCommand, InGameCommand
+from ..commands.interface import CommandInterface, AboveGameCommand
 
 if TYPE_CHECKING:
     from ..session import Session

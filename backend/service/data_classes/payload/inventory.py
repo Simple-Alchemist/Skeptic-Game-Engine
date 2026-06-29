@@ -15,8 +15,3 @@ class RemoveItemPayload(BasePayload):
     
     player_id: int
     items_removed: tuple[ItemType,...]
-
-@define(kw_only=True, frozen=True)
-class ItemDistributionPayload(BasePayload): 
-
-    distribution: dict[int, tuple[ItemType,...]] # id: inventory

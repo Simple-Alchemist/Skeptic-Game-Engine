@@ -12,7 +12,7 @@ from .items import (
 
 from .resolution import ResolutionPayload
 
-from .inventory import AddItemPayload, RemoveItemPayload, ItemDistributionPayload
+from .inventory import AddItemPayload, RemoveItemPayload
 
 from .export import ExportGameSnapshotPayload, ExportPlayerSnapshotPayload
 
@@ -33,7 +33,5 @@ __all__ = [
 
 
     "AddItemPayload",
-    "RemoveItemPayload", 
-    "ItemDistributionPayload"
-
+    "RemoveItemPayload"
     ]

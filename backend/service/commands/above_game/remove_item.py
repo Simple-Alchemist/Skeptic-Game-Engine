@@ -44,5 +44,8 @@ class RemoveItemCommand(AboveGameCommand):
 
             action_type= ActionType.REMOVING_ITEM_FROM_INVENTORY,
             is_success=True,
-            payload=RemoveItemPayload(player_id=self._player_id, items_removed=self._items)
+            payload=RemoveItemPayload(
+                player_id=self._player_id, 
+                items_removed=self._items
+                )
             )

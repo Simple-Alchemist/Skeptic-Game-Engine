@@ -60,7 +60,6 @@ class ResolutionState(StateInterface):
             )
 
             return 
-        
 
         players_uncuffed: list[int] = list()
         max_skips = len(ptm.all_player)  # Safety: avoid infinite loop

@@ -47,13 +47,18 @@ class CharemItemCommand(ItemCommandInterface):
         
         #Swapping two snapshots
         new_player_snaps = (
+
             PlayerSnapshot(
+
                 id=ptm.current_player.id, 
                 health=random_player_data.health, 
                 is_cuffed=random_player_data.is_cuffed, 
                 inventory=random_player_data.inventory
+
             ),
+
             PlayerSnapshot(
+                
                 id=random_player.id, 
                 health=current_player_data.health, 
                 is_cuffed=current_player_data.is_cuffed,

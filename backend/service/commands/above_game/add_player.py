@@ -18,11 +18,18 @@ class AddPlayerCommand(AboveGameCommand):
 
     def execute(self, session: 'Session') -> Result:
 
-        session.player_turn_manager.add_player(player_obj=Player(id=self._id, health=self._health, inventory_limit=self._inventory_limit))
+        session.player_turn_manager.add_player(
+
+            player_obj=Player(
+
+                id=self._id, 
+                health=self._health, 
+                inventory_limit=self._inventory_limit)
+            )
 
         return Result(
 
             action_type= ActionType.ADD_PLAYER,
             is_success=True,
-            #Adding a Pay load stating what is being added
-            )
+
+        )

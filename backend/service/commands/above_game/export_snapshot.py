@@ -17,6 +17,7 @@ class ExportGameSnapshotCommand(AboveGameCommand):
        game_snapshot = session.export_game_snapshot()
 
        return Result(
+           
            action_type=ActionType.EXPORT_GAME,
            is_success=True,
            payload=ExportGameSnapshotPayload(snapshot=game_snapshot)
@@ -32,7 +33,8 @@ class ExportPlayerSnapshotCommand(AboveGameCommand):
         player_snapshots = session.export_players_snapshot(player_ids=self.player_ids)
 
         return Result(
+            
             action_type=ActionType.EXPORT_PLAYERS, 
             is_success=True, 
             payload=ExportPlayerSnapshotPayload(snapshots=player_snapshots)
-            )
+        )

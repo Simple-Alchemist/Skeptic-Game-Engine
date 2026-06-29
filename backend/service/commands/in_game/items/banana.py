@@ -28,8 +28,8 @@ class BananaItemCommand(ItemCommandInterface):
         current_player.adjust_health(points=+1)
         final_health = current_player.health
         
-
         return Result(
+            
                 action_type=ActionType.USE_ITEM,
                 is_success=True,
                 payload=BananaPayload(initial_health=initial_health, final_health=final_health)

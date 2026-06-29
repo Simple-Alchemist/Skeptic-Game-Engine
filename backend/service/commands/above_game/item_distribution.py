@@ -7,7 +7,7 @@ from attrs import define, field
 if TYPE_CHECKING: 
     from ...session import Session
 
-from ...data_classes import Result, ActionType, ErrorType, ItemDistributionPayload
+from ...data_classes import Result, ActionType, ErrorType
 from ....core import ItemType
 from ..interface import AboveGameCommand
 
@@ -35,9 +35,7 @@ class ItemDistributionCommand(AboveGameCommand):
                 error_type=ErrorType.EMPTY_WEIGHT_POOL
             )
         
-        all_item_value: tuple[int,...] = tuple( item.weight for item in items_available )
-
-        
+        all_item_value: tuple[int,...] = tuple(item.weight for item in items_available)
 
         rarity_threshold = mean(data=all_item_value)- stdev(data=all_item_value)
         

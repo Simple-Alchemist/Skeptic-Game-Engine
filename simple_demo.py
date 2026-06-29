@@ -23,10 +23,10 @@ item_map: dict[str, ItemType] = {
     "two fold":ItemType.TWO_FOLD,    
     "charem":ItemType.CHAREM,  
     "banana":ItemType.BANANA,
-    "baista_dausto":ItemType.BAISTA_DAUSTO, #target_player_id
+    "baista dausto":ItemType.BAISTA_DAUSTO, #target_player_id
     "ejector":ItemType.EJECTOR,
     "inverse shell":ItemType.INVERSE_SHELL,
-    "U Turn":ItemType.U_TURN
+    "u Turn":ItemType.U_TURN
     }
 
 
@@ -46,7 +46,7 @@ while session.current_state_enum != States.GAME_OVER:
         
         print("Loading Shells...")
         time.sleep(2)
-        lives,blanks = randint(4,5),randint(4,5)
+        lives,blanks = randint(8,10),randint(4,5)
         result = session.game_command(ShotgunLoadCommand(lives=lives,blanks=blanks))
         print("Distributing Items...")
         time.sleep(2)

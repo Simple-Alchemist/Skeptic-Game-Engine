@@ -59,11 +59,14 @@ class BaistaDaustoItemCommand(ItemCommandInterface, TargetPlayerCommandInterface
                 break
 
         return Result(
+
                 action_type=ActionType.USE_ITEM,
                 is_success=True,
                 payload=BaistaDaustoPayload(
+                    
                     yoshikage_id=current_player.id,
                     target_id=self._target_player_id, 
                     total_leap_back=self._number_of_leap
+                    
                     )
             )
