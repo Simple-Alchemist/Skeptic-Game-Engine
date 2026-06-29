@@ -12,7 +12,7 @@ from ..data_classes import Result, ActionType, ErrorType, States
 class RoundManagerState(StateInterface):
 
     @property
-    def name(self) -> States:
+    def enum(self) -> States:
         return States.ROUND_MANAGER
     
     def handle(self, command: CommandInterface, session: 'Session') -> Result:

@@ -10,7 +10,7 @@ from ..data_classes import Result, ActionType, ErrorType, States, ShootPayload
 class PlayState(StateInterface):
 
     @property
-    def name(self) -> States:
+    def enum(self) -> States:
         return States.PLAY
 
     def handle(self, command: CommandInterface , session: 'Session') -> Result:

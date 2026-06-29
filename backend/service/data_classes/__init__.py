@@ -10,12 +10,16 @@ from .payload import (
     BananaPayload, 
     BaistaDaustoPayload, 
     CharemPayload,
+    
     ExportGameSnapshotPayload, 
     ExportPlayerSnapshotPayload, 
 
+    ResolutionPayload,
+
     AddItemPayload, 
     RemoveItemPayload,
-    ItemDistributionPayload
+    ItemDistributionPayload,
+
 )
 from .snapshot import GameSnapshot, PlayerSnapshot, TurnSnapshot, ShotgunSnapshot
 
@@ -41,13 +45,19 @@ __all__ = [
     "BananaPayload",
     "BaistaDaustoPayload",
     "CharemPayload",
+
+
     "ExportGameSnapshotPayload",
     "ExportPlayerSnapshotPayload",
+
+    "ResolutionPayload",
 
     
     "AddItemPayload",
     "RemoveItemPayload", 
     "ItemDistributionPayload"
+
+
 
 
 ]

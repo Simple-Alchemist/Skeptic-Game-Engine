@@ -4,7 +4,12 @@ import time
 from random import randint
 
 from backend.api import Session, BotAlgorithm, InGameCommandFactory, Result
-from backend.api.commmands import AddPlayerCommand, ItemDistributionCommand,ShotgunLoadCommand, StartRoundCommand, AddItemCommand
+from backend.api.commmands import (
+    AddPlayerCommand,
+    ItemDistributionCommand,
+    ShotgunLoadCommand, 
+    StartRoundCommand
+)
 from backend.api.enum_type import States, ItemType
 from backend.api.payload import ShellPayload, ShootPayload
 
@@ -32,9 +37,12 @@ lives,blanks = 0,0
 for i in range(1,4):
     session.game_command(command=AddPlayerCommand(id=i, health=5, inventory_limit=5))
 
-while session.current_state_name != States.GAME_OVER:
+while session.current_state_enum != States.GAME_OVER:
 
-    if session.current_state_name == States.ROUND_MANAGER:
+    if session.last_state_enum == States.RESOLUTION:
+        print(session.get_resoultion_event)
+
+    if session.current_state_enum == States.ROUND_MANAGER:
         
         print("Loading Shells...")
         time.sleep(2)

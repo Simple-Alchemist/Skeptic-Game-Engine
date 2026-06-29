@@ -9,7 +9,7 @@ from ..data_classes import Result, States
 class StateInterface(Protocol): 
 
     @property
-    def name(self) -> States:
+    def enum(self) -> States:
         ...
 
     def handle(self, command: CommandInterface, session: 'Session') -> Result: 

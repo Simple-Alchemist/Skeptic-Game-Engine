@@ -73,4 +73,5 @@ class ItemDistributionCommand(AboveGameCommand):
 
             action_type= ActionType.ITEM_DISTRIBUTION,
             is_success=True,
+            #GameSnapshot is the Payload
         )

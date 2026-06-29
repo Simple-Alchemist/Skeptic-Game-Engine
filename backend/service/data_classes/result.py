@@ -5,7 +5,7 @@ from .action_type import ActionType
 from .error_type import ErrorType
 from .payload._base import BasePayload
 
-@define(kw_only=True)
+@define(kw_only=True, frozen=True)
 class Result:
 
     action_type: ActionType 

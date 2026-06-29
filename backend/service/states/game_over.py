@@ -11,7 +11,7 @@ from ..data_classes import Result, ActionType, ErrorType, States
 class GameOverState(StateInterface):
     
     @property
-    def name(self) -> States:
+    def enum(self) -> States:
         
         return States.GAME_OVER
 

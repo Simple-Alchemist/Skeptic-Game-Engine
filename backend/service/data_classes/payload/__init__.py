@@ -8,8 +8,9 @@ from .items import (
     BaistaDaustoPayload, 
     CharemPayload,
     UTurnPayload
-    
 )
+
+from .resolution import ResolutionPayload
 
 from .inventory import AddItemPayload, RemoveItemPayload, ItemDistributionPayload
 
@@ -22,9 +23,13 @@ __all__ = [
     "HandCuffPayload", 
     "BananaPayload", 
     "CharemPayload",
+    "UTurnPayload",
     "BaistaDaustoPayload",
+
     "ExportGameSnapshotPayload",
     "ExportPlayerSnapshotPayload",
+
+    "ResolutionPayload",
 
 
     "AddItemPayload",

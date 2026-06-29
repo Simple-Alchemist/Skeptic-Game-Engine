@@ -11,8 +11,10 @@ class Session:
     
     player_turn_manager: PlayerTurnManager = field(factory=PlayerTurnManager)
     shotgun: Shotgun = field(factory=Shotgun)
-    _state: StateInterface = field(init=False, factory=RoundManagerState) 
-    _finite_machine: dict[States, type[StateInterface]] = field(factory=dict, init=False)  
+    _current_state: StateInterface = field(init=False, factory=RoundManagerState) 
+    _last_state_enum: States = field(init=False, default=States.ROUND_MANAGER)
+    _finite_machine: dict[States, type[StateInterface]] = field(factory=dict, init=False) 
+    _resolution_event: Result | None  = field(init=False, default=None) 
 
     _history: list[GameSnapshot] = field(factory=list,init=False)
 
@@ -21,31 +23,43 @@ class Session:
         self._finite_machine.update(
             {
                 States.ROUND_MANAGER:RoundManagerState,
-                States.RESOLUTION_STATE:ResolutionState,
-                States.PLAY_STATE: PlayState,
+                States.RESOLUTION:ResolutionState,
+                States.PLAY: PlayState,
                 States.GAME_OVER: GameOverState,
             }
         )
         
     @property
-    def current_state_name(self) -> States:
+    def current_state_enum(self) -> States:
 
-        return self._state.name
+        return self._current_state.enum
+    
+    @property
+    def last_state_enum(self) -> States: 
+        return self._last_state_enum
     
     @property 
     def history_span(self) -> int: 
         return len(self._history)
+    
+    @property
+    def get_resoultion_event(self) -> Result | None :
+
+        return self._resolution_event
+
 
     def change_state(self, new_state_enum: States, trigger_enter: bool) -> None: 
 
-        self._state = self._finite_machine[new_state_enum]()
+        self._last_state_enum = self._current_state.enum
+
+        self._current_state = self._finite_machine[new_state_enum]()
         
         if trigger_enter:
-            self._state.enter(session=self)
+            self._current_state.enter(session=self)
 
     def game_command(self, command: CommandInterface) -> Result:
         
-        return self._state.handle(command=command, session=self)
+        return self._current_state.handle(command=command, session=self)
 
     def export_game_snapshot(self) -> GameSnapshot: 
         
@@ -61,7 +75,7 @@ class Session:
 
 
         return GameSnapshot(
-            current_state_name=self.current_state_name,
+            current_state_name=self.current_state_enum,
             turn_data=TurnSnapshot(
                 current_player_id=self.player_turn_manager.current_player.id,
                 direction=self.player_turn_manager.direction,
@@ -175,6 +189,10 @@ class Session:
 
         self._history.append(self.export_game_snapshot())
 
+    def save_resultion_event(self, result: Result): 
+
+        self._resolution_event = result
+
     def clear_history(self): 
         
         self._history.clear()
@@ -186,6 +204,8 @@ class Session:
         
         self.import_game_snapshot(self._history[-leap])
         self._history = self._history[:-leap]
+
+
 
 
     

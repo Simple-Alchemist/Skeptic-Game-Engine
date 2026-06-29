@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from attrs import define,field
+from attrs import define
 
 if TYPE_CHECKING: 
     from ...session import Session

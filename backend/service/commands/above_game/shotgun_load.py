@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from ...session import Session
 
 from ....core import LiveShell, BlankShell
-from ...data_classes import Result, ActionType, ErrorType
+from ...data_classes import Result, ActionType
 from ..interface import AboveGameCommand
 
 
@@ -36,6 +36,6 @@ class ShotgunLoadCommand(AboveGameCommand):
 
         return Result(
 
-            action_type= ActionType.LOAD_SHELL,
+            action_type= ActionType.LOAD_SHELL_RANDOMLY_IN_SHOTGUN,
             is_success=True,
             )
